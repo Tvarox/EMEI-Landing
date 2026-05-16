@@ -18,17 +18,19 @@ export const AgentButton = ({
 
   // Simulate "Agent Thinking" when hovered - Slower
   useEffect(() => {
-    if (isHovered) {
-      const statuses = ["ANALYZING", "DECRYPTING", "EXECUTING", "READY"];
-      let i = 0;
-      const interval = setInterval(() => {
-        setStatus(statuses[i % statuses.length]);
-        i++;
-      }, 1200); // Slower updates
-      return () => clearInterval(interval);
-    } else {
+    if (!isHovered) return;
+
+    const statuses = ["ANALYZING", "DECRYPTING", "EXECUTING", "READY"];
+    let i = 0;
+    const interval = setInterval(() => {
+      setStatus(statuses[i % statuses.length]);
+      i++;
+    }, 1200);
+
+    return () => {
+      clearInterval(interval);
       setStatus("IDLE");
-    }
+    };
   }, [isHovered]);
 
   return (

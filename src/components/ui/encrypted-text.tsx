@@ -38,7 +38,7 @@ export const EncryptedText = ({
     }, 30);
 
     return () => clearInterval(interval);
-  }, [text, revealText]);
+  }, [text, revealText, targetText.length]);
 
   return (
     <div className={cn("font-sans text-white select-none inline-flex flex-wrap", className)}>
