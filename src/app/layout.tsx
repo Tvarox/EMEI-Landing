@@ -25,6 +25,12 @@ const notoSansMono = localFont({
   display: "swap",
 });
 
+const vt323 = localFont({
+  src: "../../public/fonts/VT323/VT323-Regular.ttf",
+  variable: "--font-vt323",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "EMEI | Experience",
   description: "A premium digital experience.",
@@ -38,7 +44,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${notoSansSC.variable} ${notoSansMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${notoSansSC.variable} ${notoSansMono.variable} ${vt323.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

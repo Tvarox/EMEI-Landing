@@ -6,8 +6,8 @@ html {
 }
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --background: #f4f3ef; /* Creamy off-white from screenshot */
+  --foreground: #1a1a1a; /* Dark gray/black text */
 }
 
 @theme inline {
@@ -15,6 +15,7 @@ html {
   --color-foreground: var(--foreground);
   --font-sans: var(--font-noto-sans-sc), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-mono: var(--font-noto-sans-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-vt323: var(--font-vt323), monospace;
 }
 
 body {
