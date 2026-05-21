@@ -9,58 +9,37 @@ import { motion } from "framer-motion";
  * that breathes via opacity/scale — no blur computation needed.
  */
 export const HeroSection = () => (
-  <div className="relative flex flex-col items-center justify-center min-h-screen w-full">
-    {/* Breathing ambient glow — radial gradient, no blur */}
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 0.35, scale: 1.1 }}
-      transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
-      className="absolute w-[500px] h-[500px] rounded-full -z-10"
-      style={{
-        background:
-          "radial-gradient(circle, rgba(59, 130, 246, 0.14) 0%, rgba(59, 130, 246, 0.04) 45%, transparent 70%)",
-      }}
-    />
-
-    {/* EMEI Title */}
-    <div className="relative group z-10">
+  <div className="relative min-h-screen w-full">
+    {/* EMEI Brand Block: Left-aligned at 75px X and 164px Y */}
+    <div className="absolute left-6 top-[120px] md:left-[75px] md:top-[164px] flex flex-col items-start z-10 max-w-4xl">
       <motion.h1
-        initial={{ letterSpacing: "2em", opacity: 0, filter: "blur(40px)" }}
-        animate={{ letterSpacing: "0.15em", opacity: 1, filter: "blur(0px)" }}
-        transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
-        className="text-8xl md:text-[14rem] font-serif font-bold text-white tracking-[0.15em] select-none"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="text-6xl md:text-[128px] font-serif font-normal text-white leading-none tracking-tight select-none"
       >
         EMEI
       </motion.h1>
 
-      {/* Gold underline reveal */}
+      {/* Underline — Replicating the solid line from Figma */}
       <motion.div
         initial={{ width: 0, opacity: 0 }}
         animate={{ width: "100%", opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1.5, ease: "easeInOut" }}
-        className="absolute -bottom-4 left-0 h-[1px] bg-linear-to-r from-transparent via-amber-500/60 to-transparent"
+        transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="h-[2px] bg-white/90 mt-1 md:-mt-2 mb-0 md:mb-[6px] w-full max-w-[640px]"
       />
+
+      {/* Tagline / Subtext — Replicated exactly at 24px Font Size */}
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, duration: 1.2 }}
+        className="text-lg md:text-[24px] font-sans font-light text-slate-100 leading-snug tracking-wide"
+      >
+        <p>Turn Unpaid Invoices into Instant Cash</p>
+        <p className="mt-0.5">– Powered by AI and Blockchain</p>
+      </motion.div>
     </div>
 
-    {/* Status badge - Tagline */}
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 2.5, duration: 1 }}
-      className="mt-12 text-blue-400 font-medium text-xs md:text-sm tracking-[0.2em] uppercase z-10 text-center max-w-2xl px-6"
-    >
-      Turn unpaid invoices into instant cash — powered by AI and blockchain.
-    </motion.div>
-
-    {/* Scroll indicator */}
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 3.5, duration: 1 }}
-      className="absolute bottom-12 flex flex-col items-center gap-2 text-slate-500 text-xs tracking-widest uppercase"
-    >
-      <span>See how it works</span>
-      <div className="w-[1px] h-12 bg-linear-to-b from-slate-500 to-transparent" />
-    </motion.div>
   </div>
 );

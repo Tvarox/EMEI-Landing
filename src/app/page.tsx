@@ -5,14 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 
 /* ─── Landing sections ─── */
 import { InitialScreen } from "@/components/landing/initial-screen";
-import { AmbientBackground } from "@/components/landing/ambient-background";
 import { HeroSection } from "@/components/landing/hero-section";
-import { ProblemSolutionSection as AscentSection } from "@/components/landing/ascent-section";
 import { HowItWorksSection } from "@/components/landing/how-it-works-section";
 import { WhoBenefitsSection as CloudSeaSection } from "@/components/landing/cloud-sea-section";
-import { EdgeSection } from "@/components/landing/edge-section";
-import { VisionSection as MonasterySection } from "@/components/landing/monastery-section";
-import { CTASection } from "@/components/landing/cta-section";
+import { PageHeader } from "@/components/layout/page-header";
 import { PageFooter } from "@/components/layout/page-footer";
 
 /**
@@ -27,9 +23,9 @@ export default function Home() {
 
   return (
     <main
-      className={`relative min-h-screen w-full transition-colors duration-1000 ${
+      className={`relative min-h-screen w-full ${
         isTransitioned
-          ? "bg-slate-950 overflow-x-hidden"
+          ? "bg-transparent overflow-x-hidden"
           : "bg-black overflow-hidden"
       }`}
     >
@@ -40,28 +36,20 @@ export default function Home() {
             onStart={() => setIsTransitioned(true)}
           />
         ) : (
-          <motion.div
-            key="emei"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 1.5 }}
-            className="flex flex-col w-full text-slate-50 relative z-10"
-          >
-            <AmbientBackground />
+          <div className="flex flex-col w-full text-slate-50 relative z-10">
+            {/* Fixed static background PNG */}
+            <div 
+              className="fixed inset-0 -z-50 w-full h-full bg-[url('/BG.png')] bg-[size:100%_100%] bg-center bg-no-repeat pointer-events-none"
+              aria-hidden="true"
+            />
+            <PageHeader />
             <HeroSection />
-            <AscentSection />
             <HowItWorksSection />
             <CloudSeaSection />
-            <EdgeSection />
-            <MonasterySection />
-            <CTASection />
             <PageFooter />
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
-
-      {/* Film grain overlay */}
-      <div className="fixed inset-0 pointer-events-none z-50 opacity-[0.02] mix-blend-overlay bg-zinc-100" />
     </main>
   );
 }

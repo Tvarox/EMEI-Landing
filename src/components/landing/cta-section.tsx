@@ -6,9 +6,6 @@ import { LiquidButton } from "@/components/ui/liquid-button";
 export const CTASection = () => (
   <section className="relative w-full max-w-7xl mx-auto px-6 py-40 z-10">
     <div className="relative flex flex-col items-center text-center">
-      {/* Decorative background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-600/10 blur-[120px] rounded-full -z-10" />
-      
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

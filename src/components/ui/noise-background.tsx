@@ -14,7 +14,7 @@ export const NoiseBackground = ({
   return (
     <div
       className={cn(
-        "relative flex flex-col items-center justify-center min-h-screen w-full bg-black overflow-hidden",
+        "relative flex flex-col items-center justify-center min-h-screen w-full bg-transparent overflow-hidden",
         containerClassName
       )}
     >
@@ -25,8 +25,6 @@ export const NoiseBackground = ({
           filter: "contrast(150%) brightness(1000%)",
         }}
       ></div>
-      {/* Subtle radial gradient to keep the center clean */}
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_100%)] pointer-events-none" />
       <div className={cn("relative z-10 w-full h-full", className)}>{children}</div>
     </div>
   );

@@ -94,7 +94,6 @@ export const ProblemSolutionSection = () => (
 
       {/* Solution Column */}
       <div className="lg:col-span-5 relative">
-        <div className="absolute -inset-4 bg-blue-500/5 blur-3xl rounded-full -z-10" />
         <TransactionCard />
       </div>
     </div>

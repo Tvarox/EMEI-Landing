@@ -20,16 +20,12 @@ export const InitialScreen = ({ onStart }: InitialScreenProps) => (
     animate={{ opacity: 1 }}
     exit={{
       opacity: 0,
-      scale: 0.95,
-      filter: "blur(20px)",
+      scale: 0.98,
     }}
-    transition={{ duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
+    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
     className="w-full h-screen flex items-center justify-center"
   >
     <NoiseBackground className="flex flex-col items-center justify-center gap-12 w-full h-full relative">
-      {/* Ambient neural glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none" />
-
       <div className="flex flex-col items-center gap-2 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
