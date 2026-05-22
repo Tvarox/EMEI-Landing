@@ -7,10 +7,13 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { ScrambleText } from "@/components/ui/scramble-text";
 
 const NAV = [
-  { label: "Product", href: "#product" },
-  { label: "Architecture", href: "#architecture" },
-  { label: "Developers", href: "#developers" },
-  { label: "Enterprise", href: "#enterprise" },
+  { label: "Protocol", href: "#protocol" },
+  { label: "Build", href: "#build" },
+  {
+    label: "Docs",
+    href: "https://docs.emei.xyz",
+    external: true,
+  },
 ];
 
 export const Navbar = () => {
@@ -25,12 +28,8 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300`}
-    >
-      <div
-        className={`mx-auto mt-3 sm:mt-4 max-w-[1200px] px-3 sm:px-4 transition-all duration-300`}
-      >
+    <header className="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+      <div className="mx-auto mt-3 sm:mt-4 max-w-[1200px] px-3 sm:px-4 transition-all duration-300">
         <nav
           className={`flex items-center justify-between gap-4 rounded-full border h-14 pl-5 pr-2 sm:pr-2.5 transition-all duration-300 ${
             scrolled
@@ -63,9 +62,14 @@ export const Navbar = () => {
               <li key={item.label}>
                 <a
                   href={item.href}
-                  className="text-[13px] font-medium text-ink/70 hover:text-ink transition-colors duration-200"
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
+                  className="text-[13px] font-medium text-ink/70 hover:text-ink transition-colors duration-200 inline-flex items-center gap-1"
                 >
                   {item.label}
+                  {item.external && (
+                    <ArrowUpRight className="w-3 h-3 opacity-60" />
+                  )}
                 </a>
               </li>
             ))}
@@ -83,10 +87,12 @@ export const Navbar = () => {
               <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
             <a
-              href="#cta"
+              href="https://docs.emei.xyz"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-ink text-canvas rounded-full pl-4 pr-2 py-2 text-[13px] font-semibold hover:bg-ink-2 transition-all duration-200 group"
             >
-              Get test keys
+              Read the docs
               <span className="bg-canvas/10 rounded-full p-1 group-hover:bg-accent group-hover:translate-x-0.5 transition-all">
                 <ArrowUpRight className="w-3 h-3 text-canvas" />
               </span>
@@ -114,10 +120,13 @@ export const Navbar = () => {
                 <li key={item.label}>
                   <a
                     href={item.href}
+                    target={item.external ? "_blank" : undefined}
+                    rel={item.external ? "noopener noreferrer" : undefined}
                     onClick={() => setOpen(false)}
-                    className="block py-3 px-2 text-[15px] font-medium text-ink hover:bg-black/[0.03] rounded-lg"
+                    className="flex items-center justify-between py-3 px-2 text-[15px] font-medium text-ink hover:bg-black/[0.03] rounded-lg"
                   >
                     {item.label}
+                    {item.external && <ArrowUpRight className="w-4 h-4" />}
                   </a>
                 </li>
               ))}

@@ -1,17 +1,7 @@
 import { Navbar } from "@/components/layout/navbar";
 import { HeroSection } from "@/components/landing/hero-section";
-import { TrustStrip } from "@/components/landing/trust-strip";
-import { WedgeSection } from "@/components/landing/wedge-section";
-import { LifecycleSection } from "@/components/landing/lifecycle-section";
-import { MandateExplainer } from "@/components/landing/mandate-explainer";
-import { CorridorSection } from "@/components/landing/corridor-section";
-import { ReputationSection } from "@/components/landing/reputation-section";
-import { SettlementSection } from "@/components/landing/settlement-section";
-import { ReceiptSection } from "@/components/landing/receipt-section";
-import { FacilitatorConsole } from "@/components/landing/facilitator-console";
-import { DeveloperSection } from "@/components/landing/developer-section";
-import { TrustGrid } from "@/components/landing/trust-grid";
-import { FinalCTA } from "@/components/landing/final-cta";
+import { ChipSection } from "@/components/landing/chip-section";
+import { BuildSection } from "@/components/landing/build-section";
 import { PageFooter } from "@/components/layout/page-footer";
 
 export default function Home() {
@@ -19,47 +9,17 @@ export default function Home() {
     <>
       <Navbar />
       <main className="relative w-full bg-canvas text-ink overflow-x-hidden font-sans">
-        {/* 01. Hero */}
+        {/* 01 — Hero: one line, honest dev status */}
         <HeroSection />
 
-        {/* 02. Trust strip — chains · assets · audit · pay-link */}
-        <TrustStrip />
+        {/* 02 — The chip: scroll-driven reveal of x402, AP2 mandate, ERC-8004, mUSD */}
+        <ChipSection />
 
-        {/* 03. The Wedge — live Mandate card */}
-        <WedgeSection />
-
-        {/* 04. Invoice lifecycle state machine */}
-        <LifecycleSection />
-
-        {/* 05. Mandate explainer — 4 scope axes */}
-        <MandateExplainer />
-
-        {/* 06. Cross-chain corridor */}
-        <CorridorSection />
-
-        {/* 07. Reputation gate (Bay8004) */}
-        <ReputationSection />
-
-        {/* 08. Settlement engine + yield vault */}
-        <SettlementSection />
-
-        {/* 09. Receipt anchoring (Merkle) */}
-        <ReceiptSection />
-
-        {/* 10. Live facilitator console */}
-        <FacilitatorConsole />
-
-        {/* 11. Developer experience — CLI · API · SDK */}
-        <DeveloperSection />
-
-        {/* 12. Enterprise trust grid + verified contracts */}
-        <TrustGrid />
-
-        {/* 13. Final CTA / command center */}
-        <FinalCTA />
+        {/* 03 — Build: GitBook, GitHub, email */}
+        <BuildSection />
       </main>
 
-      {/* 14. Footer */}
+      {/* 04 — Footer */}
       <PageFooter />
     </>
   );
