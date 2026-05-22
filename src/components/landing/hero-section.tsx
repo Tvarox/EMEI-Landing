@@ -1,214 +1,133 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
-import { MorphingText } from "@/components/ui/morphing-text";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Terminal } from "lucide-react";
 import AsciiWave from "@/components/ui/ascii-wave";
 
-const leftTexts = ["FIX.", "LEARN.", "TOKENIZE.", "AUTOMATE."];
-const rightTexts = ["PREVENT.", "FINANCE.", "SETTLE.", "SCALE."];
+const METRIC_RIBBON = [
+  { label: "chain", value: "5003" },
+  { label: "facilitator p99", value: "142ms" },
+  { label: "uptime", value: "99.97%" },
+  { label: "auto-collect", value: "10s" },
+  { label: "receipts", value: "30s" },
+  { label: "fuzz calls", value: "76,800" },
+];
 
 export const HeroSection = () => {
   return (
-    <section className="relative w-full pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-32 md:pb-20 flex flex-col items-center justify-center overflow-hidden min-h-[55vh] sm:min-h-[70vh] md:min-h-[80vh] lg:min-h-[90vh]">
-      {/* Subtle ASCII Wave Background */}
-      <AsciiWave className="absolute inset-0 pointer-events-none opacity-20" color="#e05e46" />
-      {/* Central Interactive Hub and Network Lines Container */}
-      <div className="relative w-full max-w-[1000px] aspect-[2/1] flex items-center justify-center z-10 px-4 mt-6">
-        
-        {/* Background SVG Diagram */}
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          viewBox="0 0 1000 500"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style={{ overflow: 'visible' }}
-        >
-          {/* Gradient defs for fading lines */}
-          <defs>
-            {/* Top Left: fades from orange at elbow to transparent at far left */}
-            <linearGradient id="grad-tl" x1="100%" y1="0%" x2="0%" y2="0%">
-              <stop offset="0%" stopColor="#e05e46" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#e05e46" stopOpacity="0" />
-            </linearGradient>
-            {/* Top Right: fades from orange at elbow to transparent at far right */}
-            <linearGradient id="grad-tr" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#e05e46" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#e05e46" stopOpacity="0" />
-            </linearGradient>
-            {/* Bottom Left: same as top left */}
-            <linearGradient id="grad-bl" x1="100%" y1="0%" x2="0%" y2="0%">
-              <stop offset="0%" stopColor="#e05e46" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#e05e46" stopOpacity="0" />
-            </linearGradient>
-            {/* Bottom Right: same as top right */}
-            <linearGradient id="grad-br" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#e05e46" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#e05e46" stopOpacity="0" />
-            </linearGradient>
-
-            {/* Glowing Beam Gradients (brighter, higher opacity orange) */}
-            <linearGradient id="beam-tl" x1="100%" y1="0%" x2="0%" y2="0%">
-              <stop offset="0%" stopColor="#e05e46" stopOpacity="0.95" />
-              <stop offset="100%" stopColor="#e05e46" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="beam-tr" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#e05e46" stopOpacity="0.95" />
-              <stop offset="100%" stopColor="#e05e46" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="beam-bl" x1="100%" y1="0%" x2="0%" y2="0%">
-              <stop offset="0%" stopColor="#e05e46" stopOpacity="0.95" />
-              <stop offset="100%" stopColor="#e05e46" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="beam-br" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#e05e46" stopOpacity="0.95" />
-              <stop offset="100%" stopColor="#e05e46" stopOpacity="0" />
-            </linearGradient>
-
-            {/* Self-contained styling for the animating beams */}
-            <style>{`
-              @keyframes flow-beam {
-                0% {
-                  stroke-dashoffset: 80;
-                }
-                100% {
-                  stroke-dashoffset: -862;
-                }
-              }
-              .animate-beam {
-                stroke-dasharray: 80 862;
-                animation: flow-beam 7s linear infinite;
-              }
-            `}</style>
-          </defs>
-
-          {/* Top Left Line — fades off to the left */}
-          <path d="M 500 250 L 350 100 L -300 100" stroke="url(#grad-tl)" strokeWidth="1.5" strokeDasharray="4 4" />
-          {/* Top Left Animating Beam */}
-          <path d="M -300 100 L 350 100 L 500 250" stroke="url(#beam-tl)" strokeWidth="2.2" strokeLinecap="round" className="animate-beam" style={{ animationDelay: "0s" }} />
-          
-          {/* Top Right Line — fades off to the right */}
-          <path d="M 500 250 L 650 100 L 1300 100" stroke="url(#grad-tr)" strokeWidth="1.5" strokeDasharray="4 4" />
-          {/* Top Right Animating Beam */}
-          <path d="M 1300 100 L 650 100 L 500 250" stroke="url(#beam-tr)" strokeWidth="2.2" strokeLinecap="round" className="animate-beam" style={{ animationDelay: "1.75s" }} />
-          
-          {/* Bottom Left Line — fades off to the left */}
-          <path d="M 500 250 L 350 400 L -300 400" stroke="url(#grad-bl)" strokeWidth="1.5" strokeDasharray="4 4" />
-          {/* Bottom Left Animating Beam */}
-          <path d="M -300 400 L 350 400 L 500 250" stroke="url(#beam-bl)" strokeWidth="2.2" strokeLinecap="round" className="animate-beam" style={{ animationDelay: "3.5s" }} />
-          
-          {/* Bottom Right Line — fades off to the right */}
-          <path d="M 500 250 L 650 400 L 1300 400" stroke="url(#grad-br)" strokeWidth="1.5" strokeDasharray="4 4" />
-          {/* Bottom Right Animating Beam */}
-          <path d="M 1300 400 L 650 400 L 500 250" stroke="url(#beam-br)" strokeWidth="2.2" strokeLinecap="round" className="animate-beam" style={{ animationDelay: "5.25s" }} />
-          
-          {/* Solid line segments near the center */}
-          <path d="M 430 180 L 380 130" stroke="#e05e46" strokeWidth="2" />
-          <path d="M 570 180 L 620 130" stroke="#e05e46" strokeWidth="2" />
-          <path d="M 430 320 L 380 370" stroke="#e05e46" strokeWidth="2" />
-          <path d="M 570 320 L 620 370" stroke="#e05e46" strokeWidth="2" />
-
-          {/* === DOTS === */}
-          {/* Top Left — inner elbow, label start */}
-          <circle cx="150" cy="100" r="4" fill="black" />
-          <circle cx="350" cy="100" r="4" fill="black" />
-          
-          {/* Top Right — label end, inner elbow */}
-          <circle cx="650" cy="100" r="4" fill="black" />
-          <circle cx="850" cy="100" r="4" fill="black" />
-          
-          {/* Bottom Left — dots, label positions */}
-          <circle cx="100" cy="400" r="4" fill="black" />
-          <circle cx="225" cy="400" r="4" fill="black" />
-          <circle cx="350" cy="400" r="4" fill="black" />
-          
-          {/* Bottom Right — label positions, far dots */}
-          <circle cx="650" cy="400" r="4" fill="black" />
-          <circle cx="775" cy="400" r="4" fill="black" />
-          <circle cx="900" cy="400" r="4" fill="black" />
-
-          {/* === LABELS (Pills) === */}
-          {/* Top Left: Invoice */}
-          <foreignObject x="210" y="87" width="80" height="26">
-            <div className="bg-[#f4f3ef] border border-[#e05e46]/30 rounded-full w-full h-full flex items-center justify-center text-[8px] sm:text-[10px] md:text-[12px] font-bold text-black/80 shadow-sm uppercase tracking-wider">
-              Invoice
-            </div>
-          </foreignObject>
-
-          {/* Top Right: Liquidity */}
-          <foreignObject x="710" y="87" width="80" height="26">
-            <div className="bg-[#f4f3ef] border border-[#e05e46]/30 rounded-full w-full h-full flex items-center justify-center text-[8px] sm:text-[10px] md:text-[11px] font-bold text-black/80 shadow-sm uppercase tracking-wider">
-              Liquidity
-            </div>
-          </foreignObject>
-
-          {/* Bottom Left: Credit */}
-          <foreignObject x="122.5" y="387" width="80" height="26">
-            <div className="bg-[#f4f3ef] border border-[#e05e46]/30 rounded-full w-full h-full flex items-center justify-center text-[8px] sm:text-[10px] md:text-[12px] font-bold text-black/80 shadow-sm uppercase tracking-wider">
-              Credit
-            </div>
-          </foreignObject>
-
-          {/* Bottom Left: Capital */}
-          <foreignObject x="247.5" y="387" width="80" height="26">
-            <div className="bg-[#f4f3ef] border border-[#e05e46]/30 rounded-full w-full h-full flex items-center justify-center text-[8px] sm:text-[10px] md:text-[12px] font-bold text-black/80 shadow-sm uppercase tracking-wider">
-              Capital
-            </div>
-          </foreignObject>
-
-          {/* Bottom Right: Yield */}
-          <foreignObject x="672.5" y="387" width="80" height="26">
-            <div className="bg-[#f4f3ef] border border-[#e05e46]/30 rounded-full w-full h-full flex items-center justify-center text-[8px] sm:text-[10px] md:text-[12px] font-bold text-black/80 shadow-sm uppercase tracking-wider">
-              Yield
-            </div>
-          </foreignObject>
-
-          {/* Bottom Right: Assets */}
-          <foreignObject x="797.5" y="387" width="80" height="26">
-            <div className="bg-[#f4f3ef] border border-[#e05e46]/30 rounded-full w-full h-full flex items-center justify-center text-[8px] sm:text-[10px] md:text-[12px] font-bold text-black/80 shadow-sm uppercase tracking-wider">
-              Assets
-            </div>
-          </foreignObject>
-
-        </svg>
-
-        {/* The large side text and central box - Absolutely centered to align perfectly with SVG */}
-        <div className="absolute inset-0 flex items-center justify-center w-full gap-2 sm:gap-6 md:gap-10 lg:gap-14 pointer-events-auto">
-          
-          {/* Left Text (Takes up exactly half remaining space minus gap) */}
-          <div className="flex flex-1 justify-end pr-1 sm:pr-2 md:pr-6 overflow-visible">
-            <MorphingText 
-              texts={leftTexts}
-              className="text-lg sm:text-3xl md:text-5xl lg:text-[5.5rem] text-black tracking-tight leading-none text-right whitespace-nowrap h-6 sm:h-12 md:h-16 lg:h-24"
-              style={{ fontFamily: 'var(--font-vt323), monospace' }}
-            />
-          </div>
-
-          {/* Central Box Logo (Responsive size in the exact center) */}
-          <div className="w-16 h-16 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 bg-[#e8e6e1] rounded-2xl sm:rounded-3xl p-1.5 sm:p-3 md:p-4 shadow-inner flex items-center justify-center shrink-0 border border-black/5 z-10">
-            <div className="w-full h-full bg-[#f4f3ef] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-sm">
-              <Image
-                src="/Logo.svg"
-                alt="EMEI logo"
-                width={80}
-                height={80}
-                className="w-8 h-8 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20"
-              />
-            </div>
-          </div>
-
-          {/* Right Text (Takes up exactly half remaining space minus gap) */}
-          <div className="flex flex-1 justify-start pl-1 sm:pl-2 md:pl-6 overflow-visible">
-            <MorphingText 
-              texts={rightTexts}
-              className="text-lg sm:text-3xl md:text-5xl lg:text-[5.5rem] text-black tracking-tight leading-none text-left whitespace-nowrap h-6 sm:h-12 md:h-16 lg:h-24"
-              style={{ fontFamily: 'var(--font-vt323), monospace' }}
-            />
-          </div>
-        </div>
-
+    <section className="relative w-full overflow-hidden pt-32 sm:pt-36 md:pt-40 lg:pt-44 pb-16 sm:pb-24 lg:pb-28">
+      {/* Subtle ASCII flame texture, only in lower 60% */}
+      <div className="absolute inset-x-0 top-1/3 bottom-0 pointer-events-none opacity-[0.16]">
+        <AsciiWave className="w-full h-full" color="#e05e46" />
       </div>
 
+      {/* Cream-to-cream radial wash for depth */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 50% at 50% 30%, rgba(255,255,255,0.6) 0%, rgba(244,243,239,0) 70%)",
+        }}
+      />
+
+      <div className="relative z-10 max-w-[1200px] mx-auto px-5 sm:px-6">
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
+          className="flex items-center gap-3 justify-center mb-8 sm:mb-10"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inset-0 rounded-full bg-accent pulse-dot" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+          </span>
+          <span className="eyebrow">
+            Live on Mantle Sepolia · chain 5003
+          </span>
+        </motion.div>
+
+        {/* Headline */}
+        <div className="text-center max-w-[1080px] mx-auto">
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
+            className="font-display text-[clamp(48px,9vw,128px)] leading-[0.92] tracking-[-0.02em] text-ink"
+          >
+            Direct-debit for
+            <br />
+            <span className="text-accent">AI&nbsp;agents.</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 1, 0.5, 1] }}
+            className="mt-7 sm:mt-8 max-w-[640px] mx-auto text-[16px] sm:text-[18px] leading-[1.55] text-ink/70 font-medium"
+          >
+            Issue an on-chain invoice. Attach a scoped payer mandate.
+            Auto-collect on the due date — settled in yield-bearing{" "}
+            <span className="text-ink">mUSD</span> on Mantle, payable from any
+            chain.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35, ease: [0.25, 1, 0.5, 1] }}
+            className="mt-9 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3"
+          >
+            <a href="#developers" className="btn-primary group">
+              Start in 5 minutes
+              <span className="bg-canvas/15 rounded-full p-1 group-hover:bg-accent transition-colors">
+                <ArrowUpRight className="w-3 h-3 text-canvas" />
+              </span>
+            </a>
+            <a href="#enterprise" className="btn-secondary group">
+              <Terminal className="w-3.5 h-3.5" />
+              Talk to engineering
+            </a>
+          </motion.div>
+        </div>
+
+        {/* Metric ribbon — glassmorphic on cream */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.55, ease: [0.25, 1, 0.5, 1] }}
+          className="relative mt-16 sm:mt-20 mx-auto max-w-[1100px]"
+        >
+          <div className="rounded-2xl border border-hairline bg-white/60 backdrop-blur-md shadow-[0_2px_24px_rgba(0,0,0,0.03)]">
+            <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-x divide-y sm:divide-y-0 divide-hairline">
+              {METRIC_RIBBON.map((m) => (
+                <li
+                  key={m.label}
+                  className="flex flex-col items-start justify-center gap-1 py-4 px-5"
+                >
+                  <span className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted">
+                    {m.label}
+                  </span>
+                  <span className="font-mono tabular text-[15px] font-medium text-ink">
+                    {m.value}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+
+        {/* Sub-caption */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.85 }}
+          className="mt-6 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-muted/80"
+        >
+          Programmable invoices · scoped mandates · settled in yield
+        </motion.p>
+      </div>
     </section>
   );
 };

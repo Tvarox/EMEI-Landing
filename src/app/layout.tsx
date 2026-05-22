@@ -32,8 +32,38 @@ const vt323 = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "EMEI | Experience",
-  description: "A premium digital experience.",
+  metadataBase: new URL("https://emei.xyz"),
+  title: {
+    default: "EMEI — The invoicing rail for autonomous economies",
+    template: "%s · EMEI",
+  },
+  description:
+    "Direct-debit for AI agents. Issue an on-chain invoice, attach a scoped payer mandate, and auto-collect on the due date — settled in yield-bearing mUSD on Mantle.",
+  keywords: [
+    "EMEI",
+    "programmable invoices",
+    "AI agent payments",
+    "stablecoin settlement",
+    "Mantle",
+    "ERC-8004",
+    "x402",
+    "mUSD",
+    "agentic commerce",
+  ],
+  openGraph: {
+    title: "EMEI — The invoicing rail for autonomous economies",
+    description:
+      "Direct-debit for AI agents. Programmable invoices, scoped mandates, settled in yield.",
+    url: "https://emei.xyz",
+    siteName: "EMEI",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "EMEI — The invoicing rail for autonomous economies",
+    description:
+      "Direct-debit for AI agents. Programmable invoices, scoped mandates, settled in yield.",
+  },
   icons: {
     icon: "/Logo.svg",
     shortcut: "/Logo.svg",
@@ -51,7 +81,9 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${notoSansSC.variable} ${notoSansMono.variable} ${vt323.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-canvas text-ink">
+        {children}
+      </body>
     </html>
   );
 }
