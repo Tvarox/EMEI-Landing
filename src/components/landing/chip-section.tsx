@@ -272,7 +272,7 @@ function Thread({
       {/* dim base trace */}
       <path
         d={d}
-        stroke="rgba(244,243,239,0.06)"
+        stroke="rgba(0,0,0,0.08)"
         strokeWidth="1"
         fill="none"
       />
@@ -324,7 +324,7 @@ function ProtocolCard({
       className={`absolute z-20 ${CARD_POS[protocol.corner]} w-[260px] sm:w-[300px] md:w-[320px] pointer-events-auto`}
       style={{ opacity, y }}
     >
-      <div className="relative rounded-xl border border-[rgba(244,243,239,0.10)] bg-[rgba(22,20,16,0.72)] backdrop-blur-md p-4 sm:p-5 shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
+      <div className="relative rounded-xl border border-hairline bg-panel/85 backdrop-blur-md p-4 sm:p-5 shadow-[0_8px_32px_rgba(0,0,0,0.06)]">
         {/* corner ticks */}
         <span className="absolute top-2 left-2 w-2 h-2 border-t border-l border-accent/60" />
         <span className="absolute top-2 right-2 w-2 h-2 border-t border-r border-accent/60" />
@@ -332,19 +332,19 @@ function ProtocolCard({
         <span className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-accent/60" />
 
         <div className="flex items-center justify-between mb-3">
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-on-inverse-muted">
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
             {protocol.label}
           </span>
           <span className="w-1.5 h-1.5 rounded-full bg-accent pulse-dot" />
         </div>
 
-        <h3 className="font-display text-[28px] sm:text-[32px] leading-none text-on-inverse">
+        <h3 className="font-display text-[28px] sm:text-[32px] leading-none text-ink">
           {protocol.name}
         </h3>
         <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
           {protocol.tagline}
         </p>
-        <p className="mt-3 text-[13.5px] leading-[1.55] text-on-inverse/75">
+        <p className="mt-3 text-[13.5px] leading-[1.55] text-ink/75">
           {protocol.blurb}
         </p>
       </div>
@@ -357,15 +357,15 @@ function ProtocolCard({
 --------------------------------------------------------------- */
 function StaticFallback() {
   return (
-    <div className="relative bg-inverse text-on-inverse py-24 sm:py-32 px-5">
+    <div className="relative bg-canvas text-ink py-24 sm:py-32 px-5">
       <div className="max-w-[640px] mx-auto">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-on-inverse-muted mb-3">
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted mb-3">
           {"// The chip"}
         </p>
         <h2 className="font-display text-[clamp(36px,7vw,56px)] leading-[0.95] tracking-[-0.01em]">
           One core. <span className="text-accent">Four protocols.</span>
         </h2>
-        <p className="mt-4 text-[15px] text-on-inverse/70 leading-[1.55]">
+        <p className="mt-4 text-[15px] text-ink/70 leading-[1.55]">
           EMEI is a single facilitator threading four open standards into one
           payment rail for autonomous agents.
         </p>
@@ -373,12 +373,12 @@ function StaticFallback() {
         <ol className="mt-12 flex flex-col gap-6 relative">
           <span
             aria-hidden
-            className="absolute left-[7px] top-2 bottom-2 w-px bg-[rgba(244,243,239,0.14)]"
+            className="absolute left-[7px] top-2 bottom-2 w-px bg-hairline"
           />
           {PROTOCOLS.map((p) => (
             <li key={p.id} className="relative pl-8">
               <span className="absolute left-0 top-1 w-3.5 h-3.5 rounded-full bg-accent shadow-[0_0_0_4px_rgba(224,94,70,0.18)]" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-on-inverse-muted">
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
                 {p.label}
               </span>
               <h3 className="font-display text-[26px] leading-none mt-1">
@@ -387,7 +387,7 @@ function StaticFallback() {
               <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
                 {p.tagline}
               </p>
-              <p className="mt-2 text-[13.5px] leading-[1.55] text-on-inverse/75">
+              <p className="mt-2 text-[13.5px] leading-[1.55] text-ink/75">
                 {p.blurb}
               </p>
             </li>
@@ -456,7 +456,7 @@ export const ChipSection = () => {
   // Reduced motion — render static, accessible version
   if (reduced) {
     return (
-      <section id="protocol" className="bg-inverse">
+      <section id="protocol" className="bg-canvas">
         <StaticFallback />
       </section>
     );
@@ -472,7 +472,7 @@ export const ChipSection = () => {
   return (
     <>
       {/* Mobile fallback — readable vertical timeline */}
-      <section id="protocol" className="lg:hidden bg-inverse">
+      <section id="protocol" className="lg:hidden bg-canvas">
         <StaticFallback />
       </section>
 
@@ -480,7 +480,7 @@ export const ChipSection = () => {
       <section
         ref={sectionRef}
         id="protocol-desktop"
-        className="hidden lg:block relative bg-inverse text-on-inverse"
+        className="hidden lg:block relative bg-canvas text-ink"
         style={{ height: "500vh" }}
         aria-label="EMEI protocol architecture"
       >
@@ -489,10 +489,10 @@ export const ChipSection = () => {
           {/* faint grid */}
           <div
             aria-hidden
-            className="absolute inset-0 opacity-[0.18]"
+            className="absolute inset-0 opacity-[0.22]"
             style={{
               backgroundImage:
-                "linear-gradient(rgba(244,243,239,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(244,243,239,0.05) 1px, transparent 1px)",
+                "linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px)",
               backgroundSize: "48px 48px",
               maskImage:
                 "radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%)",
@@ -506,18 +506,18 @@ export const ChipSection = () => {
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(224,94,70,0.10) 0%, rgba(0,0,0,0) 70%)",
+                "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(224,94,70,0.07) 0%, rgba(244,243,239,0) 70%)",
             }}
           />
 
           {/* --- Top HUD --- */}
           <div className="absolute top-24 left-0 right-0 px-6 z-30">
             <div className="max-w-[1100px] mx-auto flex items-center justify-between">
-              <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-on-inverse-muted">
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-muted">
                 {"// The chip"}
               </span>
               <motion.span
-                className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-on-inverse-muted tabular"
+                className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-muted tabular"
                 style={{ opacity: stepCounterOpacity }}
               >
                 <StepCounter step={stepIdx} /> / 04
@@ -534,7 +534,7 @@ export const ChipSection = () => {
               <h2 className="font-display text-[clamp(40px,5vw,64px)] leading-[0.95] tracking-[-0.01em]">
                 One core. <span className="text-accent">Four protocols.</span>
               </h2>
-              <p className="mt-3 text-[14px] text-on-inverse/65 max-w-[420px] mx-auto">
+              <p className="mt-3 text-[14px] text-ink/65 max-w-[420px] mx-auto">
                 Scroll. Each thread fires a piece of the rail.
               </p>
             </div>
@@ -549,7 +549,7 @@ export const ChipSection = () => {
                 Four open standards.{" "}
                 <span className="text-accent">One rail.</span>
               </h2>
-              <p className="mt-3 text-[14px] text-on-inverse/65 max-w-[420px] mx-auto">
+              <p className="mt-3 text-[14px] text-ink/65 max-w-[420px] mx-auto">
                 EMEI is the facilitator that ties them together.
               </p>
             </div>
@@ -593,11 +593,11 @@ export const ChipSection = () => {
             className="absolute bottom-8 left-0 right-0 z-30 flex flex-col items-center gap-2"
             style={{ opacity: scrollCueOpacity }}
           >
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-on-inverse-muted">
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
               scroll · trace
             </span>
             <motion.span
-              className="block w-px h-8 bg-[rgba(244,243,239,0.35)]"
+              className="block w-px h-8 bg-ink/30"
               animate={{ scaleY: [0.3, 1, 0.3] }}
               style={{ transformOrigin: "top" }}
               transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}

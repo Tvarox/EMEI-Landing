@@ -35,46 +35,25 @@ const COLUMNS: Array<{
 ];
 
 export const PageFooter = () => (
-  <footer className="relative w-full bg-inverse text-on-inverse pt-20 pb-10 overflow-hidden">
-    {/* Edge glow */}
-    <div
-      aria-hidden
-      className="absolute inset-x-0 top-0 h-40 pointer-events-none"
-      style={{
-        background:
-          "radial-gradient(60% 80% at 50% 0%, rgba(224,94,70,0.10) 0%, rgba(0,0,0,0) 70%)",
-      }}
-    />
-
+  <footer className="relative w-full bg-inverse text-on-inverse pt-16 pb-10 overflow-hidden">
     <div className="relative z-10 max-w-[1200px] mx-auto px-5 sm:px-6">
-      {/* Top: brand + tagline + dev status */}
+      {/* Top: brand */}
       <div
-        className="flex flex-col sm:flex-row gap-8 sm:gap-12 items-start sm:items-end justify-between pb-12 border-b"
+        className="pb-8 border-b"
         style={{ borderColor: "rgba(255,255,255,0.08)" }}
       >
-        <div className="flex flex-col gap-4">
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/Logo.svg"
-              alt=""
-              width={28}
-              height={28}
-              className="w-7 h-7 invert opacity-90"
-            />
-            <span className="font-semibold tracking-[0.22em] text-[15px] text-on-inverse">
-              EMEI
-            </span>
-          </Link>
-          <p className="font-display text-[clamp(28px,4vw,40px)] leading-[0.95] tracking-[-0.015em] text-on-inverse max-w-[520px]">
-            A payment rail for autonomous agents.
-          </p>
-        </div>
-
-        {/* Honest status — no fake "all systems operational" */}
-        <div className="flex items-center gap-2 font-mono text-[11px] tracking-[0.14em] uppercase text-on-inverse-muted">
-          <span className="w-1.5 h-1.5 rounded-full bg-accent pulse-dot" />
-          v0 · testnet only
-        </div>
+        <Link href="/" className="flex items-center gap-3 w-fit">
+          <Image
+            src="/Logo.svg"
+            alt=""
+            width={28}
+            height={28}
+            className="w-7 h-7 invert opacity-90"
+          />
+          <span className="font-semibold tracking-[0.22em] text-[15px] text-on-inverse">
+            EMEI
+          </span>
+        </Link>
       </div>
 
       {/* Columns */}

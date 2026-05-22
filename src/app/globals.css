@@ -66,6 +66,8 @@
   --color-ink-2: var(--ink-2);
   --color-muted: var(--muted);
   --color-muted-2: var(--muted-2);
+  --color-on-inverse: var(--on-inverse);
+  --color-on-inverse-muted: var(--on-inverse-muted);
   --color-accent: var(--accent);
   --color-accent-2: var(--accent-2);
   --color-status-ok: var(--status-ok);
