@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*";
 
@@ -8,12 +8,12 @@ export const ScrambleText = ({ text, className }: { text: string; className?: st
   const [displayText, setDisplayText] = useState(text);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const triggerScramble = () => {
+  const triggerScramble = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     
     let iteration = 0;
     intervalRef.current = setInterval(() => {
-      setDisplayText((prev) =>
+      setDisplayText(() =>
         text
           .split("")
           .map((letter, index) => {
@@ -32,7 +32,7 @@ export const ScrambleText = ({ text, className }: { text: string; className?: st
       
       iteration += 1 / 4; 
     }, 40);
-  };
+  }, [text]);
 
   useEffect(() => {
     // Trigger the scramble effect immediately when the component loads
@@ -41,7 +41,7 @@ export const ScrambleText = ({ text, className }: { text: string; className?: st
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [text]);
+  }, [triggerScramble]);
 
   return (
     <span

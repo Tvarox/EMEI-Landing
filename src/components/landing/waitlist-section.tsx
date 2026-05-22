@@ -1,45 +1,51 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 
 export const WaitlistSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [startPercent, setStartPercent] = useState(100);
+
+  useEffect(() => {
+    const updateStartPercent = () => {
+      if (window.innerWidth < 640) {
+        setStartPercent(35);
+        return;
+      }
+
+      if (window.innerWidth < 1024) {
+        setStartPercent(60);
+        return;
+      }
+
+      setStartPercent(100);
+    };
+
+    updateStartPercent();
+    window.addEventListener("resize", updateStartPercent);
+
+    return () => window.removeEventListener("resize", updateStartPercent);
+  }, []);
   
-  // Track scroll for the dome flattening
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    // 0 when top of section hits bottom of viewport
-    // 1 when top of section hits top of viewport
     offset: ["start end", "start start"] 
   });
 
-  // Flatten the dome as it natively scrolls into view. Flattens completely at 80% to avoid gaps at top.
-  // We calculate a responsive starting radius (percentage) so that small (sm) and medium screens
-  // get a sweeping, flatter curve (larger arc radius of curvature) rather than a pointed bullet shape.
   const rawProgress = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const borderRadius = useTransform(rawProgress, (val) => {
-    if (typeof window === "undefined") return `${val * 100}%`;
-    
-    let startPercent = 100;
-    if (window.innerWidth < 640) {
-      startPercent = 35; // Mobile (sm) gets a gentle, flatter sweeping arc
-    } else if (window.innerWidth < 1024) {
-      startPercent = 60; // Tablet gets a smooth, moderate arc
-    }
-    return `${val * startPercent}%`;
-  });
+  const borderRadius = useTransform(rawProgress, (val) => `${val * startPercent}%`);
 
   return (
-    <section ref={containerRef} className="relative w-full bg-[#f4f3ef] pt-8 sm:pt-10 overflow-hidden flex flex-col items-center justify-center min-h-[45vh] sm:min-h-[48vh] md:min-h-[50vh]">
+    <section ref={containerRef} className="relative w-full bg-[#f4f3ef] pt-8 sm:pt-10 overflow-hidden flex flex-col items-center justify-center min-h-[45vh] sm:min-h-[48vh] md:min-h-[50vh]" style={{ position: "relative" }}>
       
       {/* Animated Background Dome */}
       <motion.div 
         className="absolute bottom-0 w-full bg-[#111111] origin-bottom overflow-hidden"
         style={{
-          height: "100%", // Fills the section from the bottom
+          height: "100%", 
           borderTopLeftRadius: borderRadius,
           borderTopRightRadius: borderRadius,
         }}
@@ -47,7 +53,6 @@ export const WaitlistSection = () => {
         <BackgroundBeams />
       </motion.div>
       
-      {/* Static Content Layer (Always visible, prevents text stretching) */}
       <div className="relative z-10 flex flex-col items-center text-center max-w-4xl px-6 py-10 sm:py-12">
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white mb-5 md:mb-6">
           Get Early Access

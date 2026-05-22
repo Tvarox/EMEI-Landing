@@ -14,7 +14,6 @@ export const FeatureSimSection = () => {
         WebkitMaskImage: 'radial-gradient(ellipse at 70% 50%, black 20%, transparent 60%)'
       }} />
 
-      {/* Another layer of pattern to simulate depth */}
       <div className="absolute inset-0 pointer-events-none opacity-30" style={{
         backgroundImage: `radial-gradient(circle at 65% 55%, rgba(0,0,0,0.1) 1.5px, transparent 1.5px)`,
         backgroundSize: '16px 16px',

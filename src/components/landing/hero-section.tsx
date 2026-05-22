@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ArrowRight, Box } from "lucide-react";
+import Image from "next/image";
 import { MorphingText } from "@/components/ui/morphing-text";
 import AsciiWave from "@/components/ui/ascii-wave";
 
@@ -187,7 +187,13 @@ export const HeroSection = () => {
           {/* Central Box Logo (Responsive size in the exact center) */}
           <div className="w-16 h-16 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 bg-[#e8e6e1] rounded-2xl sm:rounded-3xl p-1.5 sm:p-3 md:p-4 shadow-inner flex items-center justify-center shrink-0 border border-black/5 z-10">
             <div className="w-full h-full bg-[#f4f3ef] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-sm">
-              <Box className="w-6 h-6 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 text-black" strokeWidth={1.5} />
+              <Image
+                src="/Logo.svg"
+                alt="EMEI logo"
+                width={80}
+                height={80}
+                className="w-8 h-8 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20"
+              />
             </div>
           </div>
 

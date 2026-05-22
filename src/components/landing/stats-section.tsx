@@ -48,7 +48,7 @@ export const StatsSection = () => {
               EMEI Vision
             </div>
             <p className="text-sm text-black/70 leading-relaxed font-medium">
-              "We are building a decentralized credit layer where businesses can unlock instant liquidity, and investors can access high-quality, short-duration yields." 
+              &ldquo;We are building a decentralized credit layer where businesses can unlock instant liquidity, and investors can access high-quality, short-duration yields.&rdquo;
             </p>
           </div>
 

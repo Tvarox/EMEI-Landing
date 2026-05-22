@@ -1,15 +1,18 @@
 import React from "react";
-import { Box } from "lucide-react";
+import Image from "next/image";
 
 export const PageFooter = () => (
   <footer className="w-full pt-16 pb-12 relative z-10 border-t border-white/5 bg-[#111111]">
     <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
       {/* Brand logo wordmark */}
       <div className="flex items-center gap-2">
-        <Box className="w-6 h-6 text-white" strokeWidth={2} />
-        <span className="font-bold text-lg tracking-tight text-white select-none">
-          EMEI
-        </span>
+        <Image
+          src="/Logo.svg"
+          alt="EMEI logo"
+          width={132}
+          height={36}
+          className="h-9 w-auto"
+        />
       </div>
       
       {/* Modern minimal footer links */}

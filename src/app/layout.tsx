@@ -34,6 +34,11 @@ const vt323 = localFont({
 export const metadata: Metadata = {
   title: "EMEI | Experience",
   description: "A premium digital experience.",
+  icons: {
+    icon: "/Logo.svg",
+    shortcut: "/Logo.svg",
+    apple: "/Logo.svg",
+  },
 };
 
 export default function RootLayout({
