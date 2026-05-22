@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Press_Start_2P, IBM_Plex_Mono } from "next/font/google";
+import { Inter_Tight, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const pressStart = Press_Start_2P({
-  weight: "400",
+const interTight = Inter_Tight({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
-  variable: "--font-press-start",
+  variable: "--font-inter-tight",
 });
 
-const plexMono = IBM_Plex_Mono({
-  weight: ["400", "500"],
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
-  variable: "--font-plex-mono",
+  variable: "--font-jetbrains-mono",
 });
 
 const vt323 = localFont({
@@ -29,7 +29,8 @@ export const metadata: Metadata = {
     default: "EMEI — Invoicing for machines",
     template: "%s · EMEI",
   },
-  description: "On-chain invoices for software that buys things on its own.",
+  description:
+    "An open protocol where software issues, presents, and collects invoices on-chain. Mandates, reputation, and stablecoin settlement on Mantle.",
   icons: {
     icon: "/favicon.ico",
   },
@@ -41,7 +42,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${pressStart.variable} ${vt323.variable} ${plexMono.variable}`}
+      className={`${interTight.variable} ${jetbrainsMono.variable} ${vt323.variable}`}
     >
       <body>{children}</body>
     </html>

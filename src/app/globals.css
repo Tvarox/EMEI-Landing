@@ -1,228 +1,407 @@
 @import "tailwindcss";
 
 /* =========================================================
-   EMEI — Brutalist landing tokens
-   Namespaced under --brutalist-* to coexist with any other
-   tokens in this repo without collision.
+   EMEI — Polished landing tokens
+   Warm off-white canvas + deep ink + signal-orange accent.
    ========================================================= */
 
 :root {
-  --brutalist-bg: #ffffff;
-  --brutalist-ink: #0a0a0a;
-  --brutalist-accent: #ff5500;
+  /* Palette */
+  --bg: #faf9f6;
+  --bg-2: #f4f2ec;
+  --bg-3: #ecebe4;
+  --ink: #0f0f0f;
+  --ink-2: #1a1a1a;
+  --muted: #6b6b6b;
+  --muted-2: #9a9a96;
+  --hairline: rgba(15, 15, 15, 0.08);
+  --hairline-strong: rgba(15, 15, 15, 0.16);
+  --accent: #ff5500;
+  --accent-soft: rgba(255, 85, 0, 0.08);
+  --accent-glow: rgba(255, 85, 0, 0.24);
 
-  --brutalist-font-display: var(--font-press-start), monospace;
-  --brutalist-font-mono: var(--font-vt323), ui-monospace, monospace;
-  --brutalist-font-chrome: var(--font-plex-mono), ui-monospace, monospace;
+  /* Status (data only, never decoration) */
+  --status-live: #1f7a4d;
+  --status-pending: #b8862b;
+  --status-halted: #9b3026;
+
+  /* Type families */
+  --font-display: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular,
+    Menlo, monospace;
+  --font-terminal: var(--font-vt323), ui-monospace, monospace;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-150: 150ms;
+  --dur-260: 260ms;
+  --dur-420: 420ms;
+  --dur-720: 720ms;
+
+  --background: var(--bg);
+  --foreground: var(--ink);
 
   color-scheme: light;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-bg-3: var(--bg-3);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-muted-2: var(--muted-2);
+  --color-accent: var(--accent);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
 html,
 body {
-  background: var(--brutalist-bg);
-  color: var(--brutalist-ink);
+  background: var(--bg);
+  color: var(--ink);
   margin: 0;
   padding: 0;
-  font-family: var(--font-vt323), ui-monospace, monospace;
-  text-rendering: geometricPrecision;
-  -webkit-font-smoothing: none;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-smooth: never;
+  font-feature-settings: "ss01", "cv11", "tnum" 0;
   overflow-x: hidden;
 }
 
-body {
-  cursor: none;
-}
-
-@media (hover: none), (pointer: coarse) {
-  body {
-    cursor: auto;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body {
-    cursor: auto;
-  }
-}
-
-a,
-button {
-  cursor: none;
-}
-
-@media (hover: none), (pointer: coarse) {
-  a,
-  button {
-    cursor: pointer;
-  }
-}
-
 ::selection {
-  background: var(--brutalist-accent);
-  color: var(--brutalist-bg);
+  background: var(--accent);
+  color: #ffffff;
 }
 
-/* ----- Background dot grid ----- */
-.brutalist-dot-grid {
-  position: fixed;
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================================
+   Type primitives
+   ========================================================= */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.eyebrow-accent {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.terminal {
+  font-family: var(--font-terminal);
+  letter-spacing: 0.02em;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.h1 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 120px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+.h3 {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.6vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.lead {
+  font-family: var(--font-body);
+  font-size: clamp(17px, 1.6vw, 21px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.body-muted {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* =========================================================
+   Surfaces
+   ========================================================= */
+
+.card {
+  background: #ffffff;
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+}
+
+.card-hover:hover {
+  border-color: var(--hairline-strong);
+}
+
+.hairline-t {
+  border-top: 1px solid var(--hairline);
+}
+
+.hairline-b {
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* =========================================================
+   Buttons / links
+   ========================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  transition: background var(--dur-260) var(--ease-out-quart),
+    border-color var(--dur-260) var(--ease-out-quart),
+    color var(--dur-260) var(--ease-out-quart),
+    transform var(--dur-150) var(--ease-out-quart);
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: #ffffff;
+  border: 1px solid var(--ink);
+}
+
+.btn-primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--hairline-strong);
+}
+
+.btn-ghost:hover {
+  background: var(--bg-2);
+  border-color: var(--ink);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font-weight: 500;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 2px;
+  transition: border-color var(--dur-260) var(--ease-out-quart),
+    color var(--dur-260) var(--ease-out-quart);
+}
+
+.link-arrow:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* =========================================================
+   Backgrounds & layers (parallax-friendly)
+   ========================================================= */
+
+.bg-grid {
+  position: absolute;
   inset: 0;
-  z-index: 0;
+  background-image:
+    linear-gradient(to right, var(--hairline) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+  background-size: 96px 96px;
+  background-position: -1px -1px;
+  mask-image: radial-gradient(
+    ellipse 120% 80% at 50% 30%,
+    black 30%,
+    transparent 80%
+  );
   pointer-events: none;
+}
+
+.bg-dots {
+  position: absolute;
+  inset: 0;
   background-image: radial-gradient(
-    circle,
-    var(--brutalist-ink) 1px,
+    var(--hairline-strong) 1px,
     transparent 1px
   );
-  background-size: 64px 64px;
-  background-position: 0 0;
-  opacity: 1;
+  background-size: 28px 28px;
+  pointer-events: none;
+  opacity: 0.5;
 }
 
-.brutalist-dot-spark {
+.bg-soft-glow {
   position: absolute;
-  width: 8px;
-  height: 8px;
-  background: var(--brutalist-accent);
+  width: 60vw;
+  height: 60vw;
+  max-width: 700px;
+  max-height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--accent-soft) 0%,
+    transparent 60%
+  );
+  filter: blur(40px);
   pointer-events: none;
-  display: block;
 }
 
-/* ----- Bracket frame edge ----- */
-.brutalist-frame-edge {
-  position: fixed;
-  background: var(--brutalist-ink);
-  z-index: 40;
-  pointer-events: none;
-}
+/* =========================================================
+   Status pill
+   ========================================================= */
 
-/* ----- Bracketed link (instant invert hover) ----- */
-.brutalist-link {
-  display: inline-block;
-  padding: 6px 10px;
-  border: 2px solid var(--brutalist-ink);
-  background: var(--brutalist-bg);
-  color: var(--brutalist-ink);
-  text-decoration: none;
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-size: 13px;
-  letter-spacing: 0.04em;
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 4px 8px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 999px;
+  background: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  transition: none;
+  color: var(--muted);
 }
 
-.brutalist-link:hover,
-.brutalist-link:focus-visible {
-  background: var(--brutalist-ink);
-  color: var(--brutalist-bg);
-  outline: none;
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--status-live);
+  position: relative;
 }
 
-/* ----- Block shadow utilities ----- */
-.brutalist-block-shadow {
-  box-shadow: 6px 6px 0 0 var(--brutalist-ink);
+.status-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: var(--status-live);
+  opacity: 0.25;
+  animation: status-pulse 2s var(--ease-in-out) infinite;
 }
 
-.brutalist-block-shadow-accent {
-  box-shadow: 6px 6px 0 0 var(--brutalist-accent);
+@keyframes status-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
 }
 
-/* ----- Cursor blink (steps) ----- */
-@keyframes brutalist-blink {
+/* =========================================================
+   Soft blink for terminal cursor
+   ========================================================= */
+
+@keyframes soft-blink {
   0%,
   49% {
     opacity: 1;
   }
   50%,
   100% {
-    opacity: 0;
+    opacity: 0.25;
   }
 }
 
-.brutalist-blink {
-  animation: brutalist-blink 1s steps(2, end) infinite;
+.blink {
+  animation: soft-blink 1.1s var(--ease-in-out) infinite;
 }
 
-.brutalist-blink-slow {
-  animation: brutalist-blink 1.4s steps(2, end) infinite;
-}
+/* =========================================================
+   Marquee strip (proof bar)
+   ========================================================= */
 
-/* ----- Section reveal ----- */
-.brutalist-reveal {
-  opacity: 0;
-  transform: translate3d(0, 16px, 0);
-}
-
-.brutalist-reveal.in {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  animation: brutalist-reveal-step 120ms steps(4, end) forwards;
-}
-
-@keyframes brutalist-reveal-step {
+@keyframes marquee {
   from {
-    opacity: 0;
-    transform: translate3d(0, 16px, 0);
+    transform: translateX(0);
   }
   to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translateX(-50%);
   }
 }
 
-/* ----- Section margin label (vertical) ----- */
-.brutalist-section-label {
-  position: absolute;
-  left: 32px;
-  top: 32px;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--brutalist-ink);
-  opacity: 0.7;
-  z-index: 10;
+.marquee-track {
+  animation: marquee 60s linear infinite;
 }
 
-@media (max-width: 900px) {
-  .brutalist-section-label {
-    left: 12px;
-    top: 16px;
-    font-size: 10px;
-  }
-}
+/* =========================================================
+   Reduced motion
+   ========================================================= */
 
-/* ----- Chrome positioning (mobile tightening) ----- */
-.brutalist-chrome-tl {
-  top: 32px;
-  left: 64px;
-}
-
-.brutalist-chrome-bl {
-  bottom: 36px;
-  left: 64px;
-}
-
-@media (max-width: 900px) {
-  .brutalist-chrome-tl {
-    top: 18px;
-    left: 24px;
-  }
-  .brutalist-chrome-bl {
-    bottom: 18px;
-    left: 24px;
-  }
-}
-
-/* ----- Reduced motion ----- */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -230,9 +409,37 @@ button {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
-  .brutalist-reveal {
-    opacity: 1;
-    transform: none;
+  .marquee-track {
+    animation: none !important;
   }
+}
+
+/* =========================================================
+   Container
+   ========================================================= */
+
+.container-x {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(20px, 4vw, 48px);
+  padding-right: clamp(20px, 4vw, 48px);
+}
+
+/* =========================================================
+   Section spacing
+   ========================================================= */
+
+.section {
+  position: relative;
+  padding-top: clamp(96px, 14vh, 160px);
+  padding-bottom: clamp(96px, 14vh, 160px);
+}
+
+.section-tight {
+  position: relative;
+  padding-top: clamp(64px, 10vh, 112px);
+  padding-bottom: clamp(64px, 10vh, 112px);
 }
