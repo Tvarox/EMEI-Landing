@@ -34,35 +34,36 @@ const vt323 = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://emei.xyz"),
   title: {
-    default: "EMEI — The invoicing rail for autonomous economies",
+    default: "EMEI — A payment rail for autonomous agents",
     template: "%s · EMEI",
   },
   description:
-    "Direct-debit for AI agents. Issue an on-chain invoice, attach a scoped payer mandate, and auto-collect on the due date — settled in yield-bearing mUSD on Mantle.",
+    "EMEI threads four open standards — x402, AP2 mandates, ERC-8004 identity, and mUSD settlement — into a single facilitator agents can actually pay through. Open-source, pre-production.",
   keywords: [
     "EMEI",
-    "programmable invoices",
-    "AI agent payments",
-    "stablecoin settlement",
-    "Mantle",
-    "ERC-8004",
     "x402",
+    "AP2",
+    "AP2 mandate",
+    "ERC-8004",
+    "agent identity",
+    "agent payments",
+    "Mantle",
     "mUSD",
-    "agentic commerce",
+    "facilitator",
   ],
   openGraph: {
-    title: "EMEI — The invoicing rail for autonomous economies",
+    title: "EMEI — A payment rail for autonomous agents",
     description:
-      "Direct-debit for AI agents. Programmable invoices, scoped mandates, settled in yield.",
+      "x402 · AP2 mandate · ERC-8004 · mUSD on Mantle. One facilitator. Open-source, pre-production.",
     url: "https://emei.xyz",
     siteName: "EMEI",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "EMEI — The invoicing rail for autonomous economies",
+    title: "EMEI — A payment rail for autonomous agents",
     description:
-      "Direct-debit for AI agents. Programmable invoices, scoped mandates, settled in yield.",
+      "x402 · AP2 mandate · ERC-8004 · mUSD on Mantle. One facilitator. Open-source, pre-production.",
   },
   icons: {
     icon: "/Logo.svg",
