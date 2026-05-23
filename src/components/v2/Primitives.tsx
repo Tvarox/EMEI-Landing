@@ -589,7 +589,7 @@ function InvoiceVisual() {
         <span>Terms</span>
         <span style={{ color: "var(--ink)" }}>Net 7 days</span>
         <span>Updated</span>
-        <span style={{ color: "var(--ink)" }}>~30s ago · block 0x4f…</span>
+        <span style={{ color: "var(--ink)" }}>~30s ago</span>
       </div>
     </div>
   );
