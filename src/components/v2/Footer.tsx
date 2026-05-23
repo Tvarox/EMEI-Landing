@@ -78,18 +78,7 @@ export default function Footer() {
             </FooterLink>
           </FooterColumn>
 
-          <FooterColumn title="Network">
-            <div className="status-pill" style={{ marginBottom: 12 }}>
-              <span className="status-dot" />
-              <span>Live · Mantle Sepolia</span>
-            </div>
-            <p
-              className="body-muted"
-              style={{ fontSize: 13, lineHeight: 1.55 }}
-            >
-              Mainnet pending. Built in public.
-            </p>
-          </FooterColumn>
+          <div aria-hidden="true" />
         </div>
 
         <div

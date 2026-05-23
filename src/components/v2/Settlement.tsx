@@ -16,7 +16,6 @@ export default function Settlement({
   });
 
   const fillHeight = useTransform(scrollYProgress, [0.1, 0.6], ["0%", "100%"]);
-  const yieldOpacity = useTransform(scrollYProgress, [0.4, 0.7], [0, 1]);
   const headlineY = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
@@ -210,7 +209,7 @@ export default function Settlement({
                   left: "50%",
                   top: -32,
                   transform: "translateX(-50%)",
-                  opacity: yieldOpacity,
+                  opacity: 1,
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",

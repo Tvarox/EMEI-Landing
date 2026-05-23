@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   description:
     "An open protocol where software issues, presents, and collects invoices on-chain. Mandates, reputation, and stablecoin settlement on Mantle.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.svg",
   },
 };
 
