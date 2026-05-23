@@ -6,7 +6,8 @@ import SectionEyebrow from "./SectionEyebrow";
 export default function WhyEmei() {
   return (
     <section
-      className="section-tight"
+      id="why-emei"
+      className="section-tight max-sm:!pb-20"
       style={{ position: "relative" }}
       aria-labelledby="why-heading"
     >

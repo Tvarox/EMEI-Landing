@@ -225,7 +225,7 @@ export default function Primitives() {
 
       {/* ===== MOBILE: Simple vertical stack ===== */}
       <section
-        className="primitives-mobile-stack section"
+        className="primitives-mobile-stack section max-sm:!pt-0 max-sm:!pb-20"
         style={{
           position: "relative",
           background: "transparent",
@@ -263,7 +263,6 @@ export default function Primitives() {
               display: "flex",
               flexDirection: "column",
               gap: 80,
-              paddingBottom: 80,
             }}
           >
             <MobilePrimitiveBlock
