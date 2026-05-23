@@ -15,7 +15,7 @@ export default function Footer() {
           className="grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr 1fr",
+            gridTemplateColumns: "1.5fr 1fr",
             gap: 40,
             alignItems: "start",
           }}
@@ -50,35 +50,19 @@ export default function Footer() {
             </p>
           </div>
 
-          <FooterColumn title="Protocol">
+          <FooterColumn
+            title="Protocol"
+            containerStyle={{
+              display: "grid",
+              gridTemplateColumns: "max-content max-content",
+              gap: "10px 48px",
+            }}
+          >
             <FooterLink href="#primitives">Primitives</FooterLink>
             <FooterLink href="#how-it-works">How it works</FooterLink>
             <FooterLink href="#settlement">Settlement</FooterLink>
             <FooterLink href="#status">Status</FooterLink>
           </FooterColumn>
-
-          <FooterColumn title="Build">
-            <FooterLink
-              href="https://github.com/Tvarox/EMEI-Contracts"
-              external
-            >
-              Contracts
-            </FooterLink>
-            <FooterLink
-              href="https://github.com/Tvarox/EMEI-Facilitator"
-              external
-            >
-              Facilitator
-            </FooterLink>
-            <FooterLink
-              href="https://github.com/Tvarox/EMEI-Contracts#readme"
-              external
-            >
-              Docs
-            </FooterLink>
-          </FooterColumn>
-
-          <div aria-hidden="true" />
         </div>
 
         <div
@@ -131,9 +115,11 @@ export default function Footer() {
 function FooterColumn({
   title,
   children,
+  containerStyle,
 }: {
   title: string;
   children: React.ReactNode;
+  containerStyle?: React.CSSProperties;
 }) {
   return (
     <div>
@@ -143,7 +129,14 @@ function FooterColumn({
       >
         {title}
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 10,
+          ...containerStyle,
+        }}
+      >
         {children}
       </div>
     </div>
