@@ -78,9 +78,7 @@ export default function Primitives() {
           style={{
             position: "absolute",
             inset: 0,
-            opacity: 0.4,
-            maskImage:
-              "radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 80%)",
+            opacity: 1,
             pointerEvents: "none",
           }}
         />
@@ -236,9 +234,7 @@ export default function Primitives() {
           aria-hidden
           className="bg-dots"
           style={{
-            opacity: 0.4,
-            maskImage:
-              "radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 80%)",
+            opacity: 1,
           }}
         />
         <div className="container-x" style={{ position: "relative", zIndex: 2 }}>
