@@ -15,7 +15,7 @@ export default function Settlement({
     offset: ["start end", "end start"],
   });
 
-  const fillHeight = useTransform(scrollYProgress, [0.1, 0.6], ["0%", "100%"]);
+  const fillHeight = useTransform(scrollYProgress, [0.35, 0.70], ["0%", "100%"]);
   const headlineY = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
