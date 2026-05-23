@@ -34,7 +34,7 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="section"
+      className="section max-sm:!pt-0"
       style={{
         position: "relative",
         background: "transparent",
