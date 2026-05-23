@@ -1,9 +1,11 @@
+import Logo from "./Logo";
+
 export default function Footer() {
   return (
     <footer
       className="hairline-t"
       style={{
-        background: "var(--bg-2)",
+        background: "transparent",
         paddingTop: 64,
         paddingBottom: 48,
       }}
@@ -27,23 +29,7 @@ export default function Footer() {
                 marginBottom: 16,
               }}
             >
-              <span
-                aria-hidden
-                style={{
-                  width: 18,
-                  height: 18,
-                  border: "1.5px solid var(--ink)",
-                  position: "relative",
-                }}
-              >
-                <span
-                  style={{
-                    position: "absolute",
-                    inset: 4,
-                    background: "var(--accent)",
-                  }}
-                />
-              </span>
+              <Logo width={20} className="text-ink" aria-hidden />
               <span
                 style={{
                   fontFamily: "var(--font-display)",

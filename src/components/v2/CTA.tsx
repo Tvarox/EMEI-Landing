@@ -9,7 +9,7 @@ export default function CTA() {
         position: "relative",
         paddingTop: "clamp(96px, 14vh, 160px)",
         paddingBottom: "clamp(96px, 14vh, 160px)",
-        background: "var(--bg-2)",
+        background: "transparent",
         overflow: "hidden",
       }}
       aria-labelledby="cta-heading"
@@ -23,19 +23,7 @@ export default function CTA() {
             "radial-gradient(ellipse 60% 80% at 50% 50%, black 30%, transparent 80%)",
         }}
       />
-      <div
-        aria-hidden
-        className="bg-soft-glow"
-        style={{
-          left: "50%",
-          top: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "80vw",
-          height: "80vw",
-          maxWidth: 900,
-          maxHeight: 900,
-        }}
-      />
+
 
       <div
         className="container-x"
@@ -64,25 +52,23 @@ export default function CTA() {
           </div>
           <h2
             id="cta-heading"
-            className="h1"
+            className="h2"
             style={{
               marginTop: 0,
               marginBottom: 32,
               maxWidth: "18ch",
               marginInline: "auto",
+              fontWeight: 400,
             }}
           >
             Read the protocol.{" "}
-            <em
+            <span
               style={{
-                fontStyle: "italic",
-                fontWeight: 500,
                 color: "var(--accent)",
-                fontFamily: "var(--font-display)",
               }}
             >
               Or run one.
-            </em>
+            </span>
           </h2>
           <p
             className="lead"
@@ -108,7 +94,12 @@ export default function CTA() {
               href="https://github.com/Tvarox/EMEI-Contracts"
               target="_blank"
               rel="noreferrer"
-              className="btn btn-primary"
+              className="btn"
+              style={{
+                background: "#ffffff",
+                color: "#0f0f0f",
+                border: "1px solid #ffffff",
+              }}
             >
               View contracts
               <span aria-hidden>↗</span>

@@ -1,129 +1,341 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useSpring } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import SectionEyebrow from "./SectionEyebrow";
 
 const STATUSES = ["ISSUED", "PRESENTED", "PAID"] as const;
 
+const PANELS = [
+  {
+    index: "01",
+    title: "Invoice.",
+    sub: "A lifecycle, not a document.",
+    copy: "Every EMEI invoice is an on-chain object with its own state machine. Issuers create it. Payers see it the moment it exists. Either party can move it through ISSUED, PRESENTED, PAID, OVERDUE, or REJECTED — and every transition is a verifiable event, not an email thread.",
+  },
+  {
+    index: "02",
+    title: "Mandate.",
+    sub: "Pay on rules you set in advance.",
+    copy: "A mandate is a standing permission. You define a cap, a counterparty (or category), and a time window. When an invoice arrives that fits the scope, it auto-pays on the due date. Outside the scope, it never pays. You don't have to be online for either outcome.",
+  },
+  {
+    index: "03",
+    title: "Reputation.",
+    sub: "Both sides clear before value moves.",
+    copy: "EMEI reads ERC-8004 reputation at invoice creation and re-reads it at payment time. If either side falls below the threshold you require, settlement halts. Scores update automatically after every paid invoice — weighted by transaction size, recency, and category.",
+  },
+] as const;
+
 export default function Primitives() {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // Track scroll of the tall container — aligned to the sticky pin point
+  const { scrollYProgress } = useScroll({
+    target: trackRef,
+    offset: ["start 80px", "end end"],
+  });
+
+  // Apply spring physics for a premium, smooth momentum feel
+  const smoothProgress = useSpring(scrollYProgress, {
+    mass: 0.1,
+    stiffness: 150,
+    damping: 20,
+    restDelta: 0.001,
+  });
+
+  // We use a piecewise animation to pause on each panel:
+  // 0.00 -> 0.15: Pause on Panel 1
+  // 0.15 -> 0.40: Slide to Panel 2
+  // 0.40 -> 0.60: Pause on Panel 2
+  // 0.60 -> 0.85: Slide to Panel 3
+  // 0.85 -> 1.00: Pause on Panel 3 (fully visible before unpinning)
+  const x = useTransform(
+    smoothProgress,
+    [0, 0.15, 0.4, 0.6, 0.85, 1],
+    ["0vw", "0vw", "-100vw", "-100vw", "-200vw", "-200vw"]
+  );
+
+  // Progress indicator
+  const progressWidth = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+
   return (
-    <section
-      id="primitives"
-      className="section"
-      style={{
-        position: "relative",
-        background: "var(--bg)",
-      }}
-      aria-labelledby="primitives-heading"
-    >
+    <>
+      {/* ===== DESKTOP: Scroll-jacked horizontal carousel ===== */}
       <div
-        aria-hidden
-        className="bg-dots"
+        ref={trackRef}
+        className="primitives-desktop-track"
+        id="primitives"
         style={{
-          opacity: 0.4,
-          maskImage:
-            "radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 80%)",
+          position: "relative",
+          height: "400vh", // Increased track height for comfortable reading pauses
         }}
-      />
+      >
+        {/* Background dots */}
+        <div
+          aria-hidden
+          className="bg-dots"
+          style={{
+            position: "absolute",
+            inset: 0,
+            opacity: 0.4,
+            maskImage:
+              "radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 80%)",
+            pointerEvents: "none",
+          }}
+        />
 
-      <div className="container-x" style={{ position: "relative", zIndex: 2 }}>
-        <div style={{ marginBottom: 64 }}>
-          <SectionEyebrow index="02" label="Primitives" />
-          <motion.h2
-            id="primitives-heading"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-15%" }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="h2"
-            style={{ marginTop: 24, marginBottom: 16, maxWidth: "16ch" }}
-          >
-            Three pieces. Nothing else to learn.
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-15%" }}
-            transition={{
-              duration: 0.7,
-              ease: [0.16, 1, 0.3, 1],
-              delay: 0.08,
+        {/* Sticky viewport — pinned below header */}
+        <div
+          style={{
+            position: "sticky",
+            top: "80px",
+            height: "calc(100vh - 80px)",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+          }}
+        >
+          {/* Section intro — always visible */}
+          <div
+            className="container-x"
+            style={{
+              paddingTop: "clamp(32px, 4vh, 56px)",
+              paddingBottom: "clamp(24px, 3vh, 40px)",
+              flexShrink: 0,
             }}
-            className="lead"
-            style={{ marginTop: 0 }}
           >
-            An invoice you can hand to anything. A mandate that pays it on
-            terms you set in advance. A reputation gate that keeps both sides
-            honest.
-          </motion.p>
-        </div>
+            <SectionEyebrow index="02" label="Primitives" />
+            <h2
+              id="primitives-heading"
+              className="h2"
+              style={{ marginTop: 24, marginBottom: 16, maxWidth: "16ch" }}
+            >
+              Three pieces. Nothing else to learn.
+            </h2>
+            <p className="lead" style={{ marginTop: 0, marginBottom: 0 }}>
+              An invoice you can hand to anything. A mandate that pays it on
+              terms you set in advance. A reputation gate that keeps both sides
+              honest.
+            </p>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
-          <PrimitiveBlock
-            index="01"
-            title="Invoice."
-            sub="A lifecycle, not a document."
-            copy="Every EMEI invoice is an on-chain object with its own state machine. Issuers create it. Payers see it the moment it exists. Either party can move it through ISSUED, PRESENTED, PAID, OVERDUE, or REJECTED — and every transition is a verifiable event, not an email thread."
-            visual={<InvoiceVisual />}
-          />
-          <PrimitiveBlock
-            index="02"
-            title="Mandate."
-            sub="Pay on rules you set in advance."
-            copy="A mandate is a standing permission. You define a cap, a counterparty (or category), and a time window. When an invoice arrives that fits the scope, it auto-pays on the due date. Outside the scope, it never pays. You don't have to be online for either outcome."
-            visual={<MandateVisual />}
-            reverse
-          />
-          <PrimitiveBlock
-            index="03"
-            title="Reputation."
-            sub="Both sides clear before value moves."
-            copy="EMEI reads ERC-8004 reputation at invoice creation and re-reads it at payment time. If either side falls below the threshold you require, settlement halts. Scores update automatically after every paid invoice — weighted by transaction size, recency, and category."
-            visual={<ReputationVisual />}
-          />
+            {/* Scroll progress bar */}
+            <div
+              style={{
+                marginTop: 24,
+                height: 2,
+                background: "var(--hairline)",
+                borderRadius: 1,
+                overflow: "hidden",
+                maxWidth: 320,
+              }}
+            >
+              <motion.div
+                style={{
+                  height: "100%",
+                  width: progressWidth,
+                  background: "var(--accent)",
+                  borderRadius: 1,
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Horizontal sliding strip */}
+          <motion.div
+            style={{
+              x,
+              display: "flex",
+              width: "300vw",
+              flex: 1,
+              minHeight: 0,
+            }}
+          >
+            {/* Panel 1: Invoice */}
+            <div
+              style={{
+                width: "100vw",
+                flexShrink: 0,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <div
+                className="container-x"
+                style={{ width: "100%", maxWidth: 1280 }}
+              >
+                <PrimitivePanel
+                  index={PANELS[0].index}
+                  title={PANELS[0].title}
+                  sub={PANELS[0].sub}
+                  copy={PANELS[0].copy}
+                  visual={<InvoiceVisual />}
+                />
+              </div>
+            </div>
+
+            {/* Panel 2: Mandate */}
+            <div
+              style={{
+                width: "100vw",
+                flexShrink: 0,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <div
+                className="container-x"
+                style={{ width: "100%", maxWidth: 1280 }}
+              >
+                <PrimitivePanel
+                  index={PANELS[1].index}
+                  title={PANELS[1].title}
+                  sub={PANELS[1].sub}
+                  copy={PANELS[1].copy}
+                  visual={<MandateVisual />}
+                />
+              </div>
+            </div>
+
+            {/* Panel 3: Reputation */}
+            <div
+              style={{
+                width: "100vw",
+                flexShrink: 0,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <div
+                className="container-x"
+                style={{ width: "100%", maxWidth: 1280 }}
+              >
+                <PrimitivePanel
+                  index={PANELS[2].index}
+                  title={PANELS[2].title}
+                  sub={PANELS[2].sub}
+                  copy={PANELS[2].copy}
+                  visual={<ReputationVisual />}
+                />
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+
+      {/* ===== MOBILE: Simple vertical stack ===== */}
+      <section
+        className="primitives-mobile-stack section"
+        style={{
+          position: "relative",
+          background: "transparent",
+        }}
+        aria-labelledby="primitives-heading-mobile"
+      >
+        <div
+          aria-hidden
+          className="bg-dots"
+          style={{
+            opacity: 0.4,
+            maskImage:
+              "radial-gradient(ellipse 80% 60% at 50% 30%, black 30%, transparent 80%)",
+          }}
+        />
+        <div className="container-x" style={{ position: "relative", zIndex: 2 }}>
+          <div style={{ marginBottom: 64 }}>
+            <SectionEyebrow index="02" label="Primitives" />
+            <h2
+              id="primitives-heading-mobile"
+              className="h2"
+              style={{ marginTop: 24, marginBottom: 16, maxWidth: "16ch" }}
+            >
+              Three pieces. Nothing else to learn.
+            </h2>
+            <p className="lead" style={{ marginTop: 0 }}>
+              An invoice you can hand to anything. A mandate that pays it on
+              terms you set in advance. A reputation gate that keeps both sides
+              honest.
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 80,
+              paddingBottom: 80,
+            }}
+          >
+            <MobilePrimitiveBlock
+              index="01"
+              title="Invoice."
+              sub="A lifecycle, not a document."
+              copy="Every EMEI invoice is an on-chain object with its own state machine. Issuers create it. Payers see it the moment it exists. Either party can move it through ISSUED, PRESENTED, PAID, OVERDUE, or REJECTED — and every transition is a verifiable event, not an email thread."
+              visual={<InvoiceVisual />}
+            />
+            <MobilePrimitiveBlock
+              index="02"
+              title="Mandate."
+              sub="Pay on rules you set in advance."
+              copy="A mandate is a standing permission. You define a cap, a counterparty (or category), and a time window. When an invoice arrives that fits the scope, it auto-pays on the due date. Outside the scope, it never pays. You don't have to be online for either outcome."
+              visual={<MandateVisual />}
+            />
+            <MobilePrimitiveBlock
+              index="03"
+              title="Reputation."
+              sub="Both sides clear before value moves."
+              copy="EMEI reads ERC-8004 reputation at invoice creation and re-reads it at payment time. If either side falls below the threshold you require, settlement halts. Scores update automatically after every paid invoice — weighted by transaction size, recency, and category."
+              visual={<ReputationVisual />}
+            />
+          </div>
+        </div>
+      </section>
+
+      <style>{`
+        /* Desktop track shows, mobile hides */
+        @media (min-width: 881px) {
+          .primitives-mobile-stack {
+            display: none !important;
+          }
+        }
+        /* Mobile stack shows, desktop hides */
+        @media (max-width: 880px) {
+          .primitives-desktop-track {
+            display: none !important;
+          }
+        }
+      `}</style>
+    </>
   );
 }
 
-function PrimitiveBlock({
+/* ----------------------------------------------------------- */
+/* Desktop panel layout — text left, visual right              */
+/* ----------------------------------------------------------- */
+
+function PrimitivePanel({
   index,
   title,
   sub,
   copy,
   visual,
-  reverse,
 }: {
   index: string;
   title: string;
   sub: string;
   copy: string;
   visual: React.ReactNode;
-  reverse?: boolean;
 }) {
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10%" }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+    <div
       style={{
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
-        gap: 56,
+        gap: "56px",
         alignItems: "center",
-        padding: "32px 0",
       }}
-      className="primitive-row"
     >
-      <div
-        style={{
-          order: reverse ? 2 : 1,
-        }}
-        className="primitive-copy"
-      >
+      <div>
         <div
           style={{
             display: "inline-flex",
@@ -183,29 +395,101 @@ function PrimitiveBlock({
           {copy}
         </p>
       </div>
-      <div
-        className="primitive-visual"
-        style={{
-          order: reverse ? 1 : 2,
-        }}
-      >
-        {visual}
-      </div>
+      <div>{visual}</div>
+    </div>
+  );
+}
 
-      <style>{`
-        @media (max-width: 880px) {
-          .primitive-row {
-            grid-template-columns: 1fr !important;
-            gap: 28px !important;
-          }
-          .primitive-copy {
-            order: 1 !important;
-          }
-          .primitive-visual {
-            order: 2 !important;
-          }
-        }
-      `}</style>
+/* ----------------------------------------------------------- */
+/* Mobile block — simple vertical card                         */
+/* ----------------------------------------------------------- */
+
+function MobilePrimitiveBlock({
+  index,
+  title,
+  sub,
+  copy,
+  visual,
+}: {
+  index: string;
+  title: string;
+  sub: string;
+  copy: string;
+  visual: React.ReactNode;
+}) {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10%" }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 28,
+      }}
+    >
+      <div>
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "baseline",
+            gap: 12,
+            marginBottom: 16,
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 12,
+              letterSpacing: "0.2em",
+              color: "var(--accent)",
+            }}
+          >
+            {index}
+          </span>
+          <span
+            aria-hidden
+            style={{
+              width: 24,
+              height: 1,
+              background: "var(--accent)",
+              transform: "translateY(-4px)",
+            }}
+          />
+        </div>
+        <h3
+          className="display"
+          style={{
+            fontSize: "clamp(36px, 5vw, 56px)",
+            margin: 0,
+            marginBottom: 8,
+            fontWeight: 500,
+          }}
+        >
+          {title}
+        </h3>
+        <p
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(18px, 1.6vw, 22px)",
+            color: "var(--accent)",
+            margin: 0,
+            marginBottom: 20,
+            fontWeight: 500,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {sub}
+        </p>
+        <p
+          className="body-muted"
+          style={{ maxWidth: "52ch", marginTop: 0 }}
+        >
+          {copy}
+        </p>
+      </div>
+      <div>{visual}</div>
     </motion.article>
   );
 }
@@ -258,7 +542,7 @@ function InvoiceVisual() {
             <motion.span
               animate={{
                 background:
-                  i === active ? "var(--accent)" : "transparent",
+                  i === active ? "var(--accent)" : "rgba(255, 85, 0, 0)",
                 color:
                   i === active ? "#ffffff" : "var(--ink)",
                 borderColor:
@@ -326,7 +610,6 @@ function MandateVisual() {
     if (typeof window === "undefined") return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      // matchMedia is browser-only; one-shot static value when motion is disabled.
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setPct(40);
       return;
