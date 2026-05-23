@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import HeroVisual from "./HeroVisual";
 import AsciiWave from "./AsciiWave";
+import { MorphingText } from "@/components/ui/morphing-text";
 
 const PROOF_TAGS = [
   "Mantle Sepolia",
@@ -13,6 +14,12 @@ const PROOF_TAGS = [
   "Self-custodial",
   "On-chain receipts",
   "Programmable mandates",
+];
+
+const HERO_WORDS = [
+  "machines.",
+  "AI agents.",
+  "business.",
 ];
 
 export default function Hero() {
@@ -72,7 +79,11 @@ export default function Hero() {
                 letterSpacing: "-0.03em",
               }}
             >
-              Invoicing for <span style={{ color: "var(--accent)" }}>machines.</span>
+              Invoicing for{" "}
+              <MorphingText
+                texts={HERO_WORDS}
+                style={{ color: "var(--accent)" }}
+              />
             </motion.h1>
 
             <motion.p
