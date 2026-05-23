@@ -161,6 +161,7 @@ export default function HeroVisual() {
 
       {/* Front card */}
       <motion.div
+        className="max-sm:!w-[88%] max-sm:!right-[2%] max-sm:!aspect-auto max-sm:!pb-4"
         style={{
           position: "absolute",
           right: "6%",
@@ -189,6 +190,7 @@ export default function HeroVisual() {
         >
           <div>
             <div
+              className="lg:!text-[12px]"
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: 10,
@@ -201,6 +203,7 @@ export default function HeroVisual() {
               INVOICE · 0xB8E1
             </div>
             <div
+              className="lg:!text-[28px]"
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 600,
@@ -216,6 +219,7 @@ export default function HeroVisual() {
         </div>
 
         <div
+          className="max-sm:!gap-x-2 lg:!text-[14px]"
           style={{
             display: "grid",
             gridTemplateColumns: "auto 1fr",
@@ -233,10 +237,11 @@ export default function HeroVisual() {
           <span>Terms</span>
           <span style={{ color: "var(--ink)" }}>Net 7 days</span>
           <span>Mandate</span>
-          <span style={{ color: "var(--ink)" }}>Auto-collect · scope ✓</span>
+          <span style={{ color: "var(--ink)" }}>Auto-collect</span>
         </div>
 
         <div
+          className="max-sm:flex-col max-sm:items-start max-sm:gap-1 lg:!text-[12px]"
           style={{
             marginTop: "auto",
             paddingTop: 12,
