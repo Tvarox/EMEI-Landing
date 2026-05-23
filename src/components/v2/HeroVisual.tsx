@@ -277,39 +277,6 @@ export default function HeroVisual() {
         Live · Testnet
       </motion.div>
 
-      {/* Floating mandate tag (bottom left) */}
-      <motion.div
-        style={{
-          position: "absolute",
-          left: "2%",
-          bottom: "6%",
-          x: tx3,
-          y: ty3,
-          background: "#ffffff",
-          border: "1px solid var(--hairline-strong)",
-          borderRadius: 999,
-          padding: "6px 12px 6px 8px",
-          fontFamily: "var(--font-mono)",
-          fontSize: 11,
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          color: "var(--ink)",
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 8,
-          boxShadow: "0 8px 24px -10px rgba(15,15,15,0.18)",
-        }}
-      >
-        <span
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: "50%",
-            background: "var(--accent)",
-          }}
-        />
-        Mandate · 250/1000
-      </motion.div>
     </div>
   );
 }

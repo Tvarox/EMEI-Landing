@@ -1,137 +1,122 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import Logo from "./Logo";
 
-export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*";
+
+function ScrambleText({ text, className }: { text: string; className?: string }) {
+  const [displayText, setDisplayText] = useState(text);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const triggerScramble = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    
+    let iteration = 0;
+    intervalRef.current = setInterval(() => {
+      setDisplayText(() =>
+        text
+          .split("")
+          .map((letter, index) => {
+            if (index < Math.floor(iteration)) {
+              return text[index];
+            }
+            return CHARS[Math.floor(Math.random() * CHARS.length)];
+          })
+          .join("")
+      );
+
+      if (iteration >= text.length) {
+        clearInterval(intervalRef.current!);
+        setDisplayText(text);
+      }
+      
+      iteration += 1 / 4; 
+    }, 40);
+  };
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    triggerScramble();
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
 
   return (
-    <header
+    <span
+      className={className}
+      onMouseEnter={triggerScramble}
+      style={{ cursor: "crosshair" }}
+    >
+      {displayText}
+    </span>
+  );
+}
+
+export default function Header() {
+
+
+  return (
+    <div 
+      className="fixed top-6 z-50 w-11/12 max-w-[800px] transition-all duration-500"
       style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        transition:
-          "background-color var(--dur-260) var(--ease-out-quart), border-color var(--dur-260) var(--ease-out-quart), backdrop-filter var(--dur-260) var(--ease-out-quart)",
-        backgroundColor: scrolled
-          ? "rgba(250, 249, 246, 0.86)"
-          : "transparent",
-        borderBottom: scrolled
-          ? "1px solid var(--hairline)"
-          : "1px solid transparent",
-        backdropFilter: scrolled ? "saturate(140%) blur(8px)" : "none",
-        WebkitBackdropFilter: scrolled ? "saturate(140%) blur(8px)" : "none",
+        left: "50%",
+        transform: "translateX(-50%)",
       }}
     >
-      <div
-        className="container-x"
-        style={{
-          height: 64,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
+      <nav 
+        className="flex items-center justify-between py-2 px-6 bg-white/40 backdrop-blur-xl rounded-full border border-white/20 shadow-lg shadow-black/5 hover:shadow-xl hover:bg-white/50 transition-all duration-300"
       >
+        {/* Left: Brand Logo & Scramble Text */}
         <a
           href="#top"
           aria-label="EMEI"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 10,
-            color: "var(--ink)",
-          }}
+          className="flex items-center gap-3 text-ink select-none font-bold w-[120px] shrink-0 whitespace-nowrap"
         >
-          <span
-            aria-hidden
-            style={{
-              width: 18,
-              height: 18,
-              border: "1.5px solid var(--ink)",
-              position: "relative",
-            }}
-          >
-            <span
-              style={{
-                position: "absolute",
-                inset: 4,
-                background: "var(--accent)",
-              }}
-            />
-          </span>
-          <span
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              letterSpacing: "-0.02em",
-              fontSize: 17,
-            }}
-          >
-            EMEI
-          </span>
+          <Logo width={20} aria-hidden />
+          <ScrambleText
+            text="EMEI"
+            className="font-display font-semibold text-lg tracking-[0.16em] text-ink"
+          />
         </a>
 
-        <nav
+        {/* Center: Desktop Navigation Links */}
+        <div
           aria-label="primary"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 28,
-          }}
+          className="hidden md:flex items-center gap-8"
         >
           <a
             href="#primitives"
-            className="hidden md:inline-flex"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: 14,
-              color: "var(--muted)",
-            }}
+            className="font-sans text-sm font-medium text-muted hover:text-ink transition-colors duration-200"
           >
             Protocol
           </a>
           <a
             href="#how-it-works"
-            className="hidden md:inline-flex"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: 14,
-              color: "var(--muted)",
-            }}
+            className="font-sans text-sm font-medium text-muted hover:text-ink transition-colors duration-200"
           >
             How it works
           </a>
-          <a
-            href="#status"
-            className="hidden md:inline-flex"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: 14,
-              color: "var(--muted)",
-            }}
-          >
-            Status
-          </a>
-          <a
-            href="https://github.com/Tvarox/EMEI-Contracts"
-            target="_blank"
-            rel="noreferrer"
-            className="btn btn-ghost"
-          >
-            GitHub
-            <span aria-hidden>↗</span>
-          </a>
-        </nav>
-      </div>
-    </header>
+        </div>
+
+        {/* Right: GitHub Action Callout */}
+        <a
+          href="https://github.com/Tvarox/EMEI-Contracts"
+          target="_blank"
+          rel="noreferrer"
+          className="btn btn-ghost h-9 px-4 rounded-full text-xs font-semibold hover:bg-white/70"
+          style={{
+            paddingTop: 0,
+            paddingBottom: 0,
+            display: "inline-flex",
+            alignItems: "center",
+          }}
+        >
+          GitHub
+          <span aria-hidden className="ml-1 text-[10px]">↗</span>
+        </a>
+      </nav>
+    </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import HeroVisual from "./HeroVisual";
+import AsciiWave from "./AsciiWave";
 
 const PROOF_TAGS = [
   "Mantle Sepolia",
@@ -21,26 +22,12 @@ export default function Hero() {
       style={{
         position: "relative",
         paddingTop: "calc(64px + clamp(48px, 9vh, 120px))",
-        paddingBottom: "clamp(64px, 10vh, 120px)",
+        paddingBottom: "clamp(48px, 8vh, 80px)",
         overflow: "hidden",
       }}
     >
-      <div
-        aria-hidden
-        className="bg-grid"
-        style={{
-          opacity: 0.6,
-          maskImage:
-            "radial-gradient(ellipse 80% 60% at 50% 30%, black 40%, transparent 90%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="bg-soft-glow"
-        style={{
-          top: "-10%",
-          right: "-15%",
-        }}
+      <AsciiWave
+        className="absolute inset-0 pointer-events-none opacity-25"
       />
 
       <div
@@ -77,18 +64,15 @@ export default function Hero() {
                 delay: 0.05,
               }}
               className="h1"
-              style={{ marginTop: 0, marginBottom: 24 }}
+              style={{
+                marginTop: 0,
+                marginBottom: 18,
+                fontSize: "clamp(38px, 6vw, 76px)",
+                lineHeight: 0.92,
+                letterSpacing: "-0.03em",
+              }}
             >
-              Invoicing for <em
-                style={{
-                  fontStyle: "italic",
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 500,
-                  color: "var(--accent)",
-                }}
-              >
-                machines.
-              </em>
+              Invoicing for <span style={{ color: "var(--accent)" }}>machines.</span>
             </motion.h1>
 
             <motion.p
@@ -100,7 +84,7 @@ export default function Hero() {
                 delay: 0.15,
               }}
               className="lead"
-              style={{ marginTop: 0, marginBottom: 36 }}
+              style={{ marginTop: 0, marginBottom: 28 }}
             >
               EMEI is an open protocol where software issues, presents, and
               collects invoices on-chain &mdash; with programmable mandates,
@@ -136,43 +120,6 @@ export default function Hero() {
                 <span aria-hidden>↗</span>
               </a>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.45 }}
-              style={{
-                marginTop: 56,
-                display: "flex",
-                alignItems: "center",
-                gap: 16,
-              }}
-            >
-              <div
-                className="eyebrow"
-                style={{ fontSize: 10, whiteSpace: "nowrap" }}
-              >
-                Built on
-              </div>
-              <div
-                aria-hidden
-                style={{
-                  flex: 1,
-                  height: 1,
-                  background: "var(--hairline)",
-                }}
-              />
-              <div
-                className="terminal"
-                style={{
-                  fontSize: 18,
-                  color: "var(--ink)",
-                  letterSpacing: "0.04em",
-                }}
-              >
-                MANTLE · USDC · mUSD · ERC&#x2011;8004
-              </div>
-            </motion.div>
           </div>
 
           <motion.div
@@ -194,7 +141,7 @@ export default function Hero() {
         aria-hidden
         className="hairline-t"
         style={{
-          marginTop: "clamp(56px, 8vh, 96px)",
+          marginTop: "clamp(32px, 4vh, 48px)",
           paddingTop: 18,
           paddingBottom: 18,
           background: "var(--bg)",
@@ -207,35 +154,61 @@ export default function Hero() {
           className="marquee-track"
           style={{
             display: "flex",
-            gap: 48,
-            whiteSpace: "nowrap",
             width: "max-content",
           }}
         >
-          {[...PROOF_TAGS, ...PROOF_TAGS].map((tag, i) => (
-            <span
-              key={i}
-              className="eyebrow"
-              style={{
-                fontSize: 12,
-                color: "var(--muted)",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 12,
-              }}
-            >
+          <div style={{ display: "flex", gap: 48, paddingRight: 48 }}>
+            {PROOF_TAGS.map((tag, i) => (
               <span
+                key={`a-${i}`}
+                className="eyebrow"
                 style={{
-                  width: 4,
-                  height: 4,
-                  borderRadius: "50%",
-                  background: "var(--accent)",
-                  flexShrink: 0,
+                  fontSize: 12,
+                  color: "var(--muted)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 12,
                 }}
-              />
-              {tag}
-            </span>
-          ))}
+              >
+                <span
+                  style={{
+                    width: 4,
+                    height: 4,
+                    borderRadius: "50%",
+                    background: "var(--accent)",
+                    flexShrink: 0,
+                  }}
+                />
+                {tag}
+              </span>
+            ))}
+          </div>
+          <div style={{ display: "flex", gap: 48, paddingRight: 48 }}>
+            {PROOF_TAGS.map((tag, i) => (
+              <span
+                key={`b-${i}`}
+                className="eyebrow"
+                style={{
+                  fontSize: 12,
+                  color: "var(--muted)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 12,
+                }}
+              >
+                <span
+                  style={{
+                    width: 4,
+                    height: 4,
+                    borderRadius: "50%",
+                    background: "var(--accent)",
+                    flexShrink: 0,
+                  }}
+                />
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 

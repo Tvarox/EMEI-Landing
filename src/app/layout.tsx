@@ -43,8 +43,9 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${interTight.variable} ${jetbrainsMono.variable} ${vt323.variable}`}
+      style={{ position: "relative" }}
     >
-      <body>{children}</body>
+      <body className="antialiased" style={{ position: "relative" }}>{children}</body>
     </html>
   );
 }

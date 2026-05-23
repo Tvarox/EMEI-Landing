@@ -1,13 +1,17 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import SectionEyebrow from "./SectionEyebrow";
+import { DottedGlowBackground } from "@/components/ui/dotted-glow-background";
 
-export default function Settlement() {
-  const ref = useRef<HTMLDivElement | null>(null);
+export default function Settlement({
+  sectionRef,
+}: {
+  sectionRef: React.RefObject<HTMLDivElement | null>;
+}) {
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: sectionRef,
     offset: ["start end", "end start"],
   });
 
@@ -18,44 +22,31 @@ export default function Settlement() {
   return (
     <section
       id="settlement"
-      ref={ref}
+      ref={sectionRef}
       className="section"
       style={{
         position: "relative",
-        background: "var(--ink)",
-        color: "#ffffff",
+        background: "transparent",
+        color: "var(--ink)",
       }}
       aria-labelledby="settle-heading"
     >
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage:
-            "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-          opacity: 0.6,
-          pointerEvents: "none",
-        }}
+      <DottedGlowBackground
+        className="hidden md:block pointer-events-none"
+        gap={14}
+        radius={1.2}
+        color="rgba(255, 85, 0, 0.3)"
+        glowColor="rgba(255, 85, 0, 0.9)"
+        opacity={0.7}
+        backgroundOpacity={0}
+        speedMin={0.3}
+        speedMax={1.2}
+        speedScale={1}
+        fadeEdge={true}
       />
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          right: "-20%",
-          top: "20%",
-          width: "60vw",
-          height: "60vw",
-          maxWidth: 700,
-          maxHeight: 700,
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(255,85,0,0.18) 0%, transparent 60%)",
-          filter: "blur(60px)",
-          pointerEvents: "none",
-        }}
-      />
+
+      {/* Dynamic theme background handles transition seamlessly */}
+
 
       <div
         className="container-x"
@@ -64,7 +55,7 @@ export default function Settlement() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1.1fr 0.9fr",
+            gridTemplateColumns: "1.3fr 0.7fr",
             gap: 64,
             alignItems: "center",
           }}
@@ -78,8 +69,8 @@ export default function Settlement() {
               style={{
                 marginTop: 24,
                 marginBottom: 24,
-                color: "#ffffff",
-                maxWidth: "16ch",
+                maxWidth: "28ch",
+                fontWeight: 400,
               }}
             >
               Paid in stablecoins. Earning while it sits.
@@ -87,10 +78,10 @@ export default function Settlement() {
             <p
               className="body"
               style={{
-                color: "rgba(255,255,255,0.72)",
+                color: "var(--muted)",
                 fontSize: 17,
                 lineHeight: 1.6,
-                maxWidth: "52ch",
+                maxWidth: "58ch",
                 marginBottom: 32,
               }}
             >
@@ -107,29 +98,33 @@ export default function Settlement() {
                 gridTemplateColumns: "1fr 1fr",
                 gap: 24,
                 paddingTop: 24,
-                borderTop: "1px solid rgba(255,255,255,0.1)",
-                maxWidth: 480,
+                borderTop: "1px solid var(--hairline-strong)",
+                maxWidth: 540,
               }}
             >
               <Stat
                 label="Settlement asset"
                 value="mUSD"
                 sub="on Mantle · chain 5003"
+                delay={0}
               />
               <Stat
                 label="Receipt anchoring"
                 value="~30s"
                 sub="Merkle-batched on-chain"
+                delay={120}
               />
               <Stat
                 label="Slippage cap"
                 value="≤ 1.0%"
                 sub="USDC → mUSD swaps"
+                delay={240}
               />
               <Stat
                 label="Withdrawal"
                 value="Anytime"
                 sub="self-custodial vault"
+                delay={360}
               />
             </div>
           </motion.div>
@@ -155,10 +150,10 @@ export default function Settlement() {
                 style={{
                   position: "absolute",
                   inset: 0,
-                  border: "1px solid rgba(255,255,255,0.16)",
+                  border: "1px solid var(--hairline-strong)",
                   borderRadius: 16,
                   background:
-                    "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
+                    "linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%)",
                   overflow: "hidden",
                 }}
               >
@@ -199,7 +194,7 @@ export default function Settlement() {
                     bottom: `${p}%`,
                     fontFamily: "var(--font-mono)",
                     fontSize: 10,
-                    color: "rgba(255,255,255,0.4)",
+                    color: "var(--muted)",
                     letterSpacing: "0.08em",
                     transform: "translateY(50%)",
                   }}
@@ -255,7 +250,7 @@ export default function Settlement() {
                   fontFamily: "var(--font-mono)",
                   fontSize: 10,
                   letterSpacing: "0.18em",
-                  color: "rgba(255,255,255,0.4)",
+                  color: "var(--muted)",
                   textTransform: "uppercase",
                 }}
               >
@@ -278,14 +273,101 @@ export default function Settlement() {
   );
 }
 
+const GLYPHS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_@#$%-+=*";
+
+function ScrambleText({
+  text,
+  duration = 800,
+  delay = 0,
+}: {
+  text: string;
+  duration?: number;
+  delay?: number;
+}) {
+  const [displayDynamicText, setDisplayDynamicText] = useState(text);
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const ref = useRef<HTMLSpanElement | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsIntersecting(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsIntersecting(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isIntersecting) return;
+
+    let isCancelled = false;
+    let startTimestamp: number | null = null;
+
+    const run = (timestamp: number) => {
+      if (startTimestamp === null) {
+        startTimestamp = timestamp;
+      }
+      const elapsed = timestamp - startTimestamp;
+      const progress = Math.min(elapsed / duration, 1);
+
+      const revealCount = Math.floor(progress * text.length);
+
+      let scrambled = "";
+      for (let i = 0; i < text.length; i++) {
+        if (i < revealCount) {
+          scrambled += text[i];
+        } else {
+          if (text[i] === " ") {
+            scrambled += " ";
+          } else {
+            scrambled += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+          }
+        }
+      }
+
+      if (!isCancelled) {
+        setDisplayDynamicText(scrambled);
+        if (progress < 1) {
+          requestAnimationFrame(run);
+        }
+      }
+    };
+
+    const timeoutId = setTimeout(() => {
+      requestAnimationFrame(run);
+    }, delay);
+
+    return () => {
+      isCancelled = true;
+      clearTimeout(timeoutId);
+    };
+  }, [text, duration, delay, isIntersecting]);
+
+  return <span ref={ref}>{displayDynamicText}</span>;
+}
+
 function Stat({
   label,
   value,
   sub,
+  delay,
 }: {
   label: string;
   value: string;
   sub: string;
+  delay: number;
 }) {
   return (
     <div>
@@ -294,7 +376,7 @@ function Stat({
           fontFamily: "var(--font-mono)",
           fontSize: 10,
           letterSpacing: "0.18em",
-          color: "rgba(255,255,255,0.5)",
+          color: "var(--muted)",
           textTransform: "uppercase",
           marginBottom: 6,
         }}
@@ -305,18 +387,19 @@ function Stat({
         className="display tabular"
         style={{
           fontSize: 22,
-          color: "#ffffff",
-          fontWeight: 500,
+          color: "var(--ink)",
+          fontWeight: 400,
+          letterSpacing: "0.06em",
           marginBottom: 4,
         }}
       >
-        {value}
+        <ScrambleText text={value} delay={delay} />
       </div>
       <div
         style={{
           fontFamily: "var(--font-body)",
           fontSize: 12,
-          color: "rgba(255,255,255,0.6)",
+          color: "var(--muted)",
         }}
       >
         {sub}

@@ -10,6 +10,7 @@
   --bg: #faf9f6;
   --bg-2: #f4f2ec;
   --bg-3: #ecebe4;
+  --bg-card: #ffffff;
   --ink: #0f0f0f;
   --ink-2: #1a1a1a;
   --muted: #6b6b6b;
@@ -53,6 +54,7 @@
   --color-bg: var(--bg);
   --color-bg-2: var(--bg-2);
   --color-bg-3: var(--bg-3);
+  --color-bg-card: var(--bg-card);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-muted: var(--muted);
@@ -76,6 +78,7 @@ html {
 
 html,
 body {
+  position: relative;
   background: var(--bg);
   color: var(--ink);
   margin: 0;
@@ -84,7 +87,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "ss01", "cv11", "tnum" 0;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 ::selection {
@@ -277,21 +280,17 @@ a {
     linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
   background-size: 96px 96px;
   background-position: -1px -1px;
-  mask-image: radial-gradient(
-    ellipse 120% 80% at 50% 30%,
-    black 30%,
-    transparent 80%
-  );
+  mask-image: radial-gradient(ellipse 120% 80% at 50% 30%,
+      black 30%,
+      transparent 80%);
   pointer-events: none;
 }
 
 .bg-dots {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(
-    var(--hairline-strong) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(var(--hairline-strong) 1px,
+      transparent 1px);
   background-size: 28px 28px;
   pointer-events: none;
   opacity: 0.5;
@@ -304,11 +303,9 @@ a {
   max-width: 700px;
   max-height: 700px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    var(--accent-soft) 0%,
-    transparent 60%
-  );
+  background: radial-gradient(circle,
+      var(--accent-soft) 0%,
+      transparent 60%);
   filter: blur(40px);
   pointer-events: none;
 }
@@ -351,11 +348,13 @@ a {
 }
 
 @keyframes status-pulse {
+
   0%,
   100% {
     transform: scale(1);
     opacity: 0.25;
   }
+
   50% {
     transform: scale(1.6);
     opacity: 0;
@@ -367,10 +366,12 @@ a {
    ========================================================= */
 
 @keyframes soft-blink {
+
   0%,
   49% {
     opacity: 1;
   }
+
   50%,
   100% {
     opacity: 0.25;
@@ -389,6 +390,7 @@ a {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-50%);
   }
@@ -403,6 +405,7 @@ a {
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -411,6 +414,7 @@ a {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+
   .marquee-track {
     animation: none !important;
   }
@@ -442,4 +446,15 @@ a {
   position: relative;
   padding-top: clamp(64px, 10vh, 112px);
   padding-bottom: clamp(64px, 10vh, 112px);
+}
+
+/* Custom responsive spacer for Section 3 -> Section 4 transition */
+.transition-spacer {
+  height: 20vh;
+}
+
+@media (max-width: 880px) {
+  .transition-spacer {
+    height: 8vh;
+  }
 }

@@ -37,7 +37,7 @@ export default function HowItWorks() {
       className="section"
       style={{
         position: "relative",
-        background: "var(--bg-2)",
+        background: "transparent",
       }}
       aria-labelledby="hiw-heading"
     >
@@ -86,21 +86,40 @@ export default function HowItWorks() {
           }}
           className="hiw-grid"
         >
-          {/* Connecting line */}
+          {/* Connecting line with a moving orange light beam */}
           <div
             aria-hidden
             style={{
               position: "absolute",
-              top: 36,
+              top: 24, // Perfect center of the 48px circles (48 / 2 = 24)
               left: 24,
               right: 24,
-              height: 1,
+              height: 2,
               background:
                 "linear-gradient(to right, transparent, var(--hairline-strong) 8%, var(--hairline-strong) 92%, transparent)",
               zIndex: 0,
+              overflow: "hidden",
+              borderRadius: 1,
             }}
             className="hiw-line"
-          />
+          >
+            <motion.div
+              initial={{ left: "-30%" }}
+              animate={{ left: "100%" }}
+              transition={{
+                duration: 3.5,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              style={{
+                position: "absolute",
+                top: 0,
+                bottom: 0,
+                width: "30%",
+                background: "linear-gradient(90deg, transparent, var(--accent) 50%, transparent)",
+              }}
+            />
+          </div>
 
           {STEPS.map((s, i) => (
             <motion.div
@@ -149,7 +168,7 @@ export default function HowItWorks() {
               >
                 {s.title}
               </h3>
-              <p className="body-muted" style={{ fontSize: 15, marginTop: 0 }}>
+              <p className="body-muted" style={{ fontSize: 13.5, marginTop: 0 }}>
                 {s.body}
               </p>
             </motion.div>
