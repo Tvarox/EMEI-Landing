@@ -45,6 +45,30 @@ export default function Home() {
 
   // Dynamically apply variables to the document element (html/body)
   useEffect(() => {
+    // Immediate style application to prevent flash on reload
+    const applyStyles = (vBg: string, vBg2: string, vBg3: string, vBgCard: string, vInk: string, vMuted: string, vHairline: string, vHairlineStrong: string) => {
+      document.documentElement.style.setProperty("--bg", vBg);
+      document.documentElement.style.setProperty("--bg-2", vBg2);
+      document.documentElement.style.setProperty("--bg-3", vBg3);
+      document.documentElement.style.setProperty("--bg-card", vBgCard);
+      document.documentElement.style.setProperty("--ink", vInk);
+      document.documentElement.style.setProperty("--muted", vMuted);
+      document.documentElement.style.setProperty("--hairline", vHairline);
+      document.documentElement.style.setProperty("--hairline-strong", vHairlineStrong);
+    };
+
+    // Use get() to read initial values from motion variables
+    applyStyles(
+      bg.get(),
+      bg2.get(),
+      bg3.get(),
+      bgCard.get(),
+      ink.get(),
+      muted.get(),
+      hairline.get(),
+      hairlineStrong.get()
+    );
+
     const unsubBg = bg.on("change", (v) => {
       document.documentElement.style.setProperty("--bg", v);
     });
@@ -80,20 +104,13 @@ export default function Home() {
       unsubHairline();
       unsubHairlineStrong();
 
-      // Reset variables on cleanup
-      document.documentElement.style.removeProperty("--bg");
-      document.documentElement.style.removeProperty("--bg-2");
-      document.documentElement.style.removeProperty("--bg-3");
-      document.documentElement.style.removeProperty("--bg-card");
-      document.documentElement.style.removeProperty("--ink");
-      document.documentElement.style.removeProperty("--muted");
-      document.documentElement.style.removeProperty("--hairline");
-      document.documentElement.style.removeProperty("--hairline-strong");
+      // IMPORTANT: DO NOT remove properties on cleanup to prevent flash of white
+      // when React unmounts/remounts during hot reloads or fast navigation.
     };
   }, [bg, bg2, bg3, bgCard, ink, muted, hairline, hairlineStrong]);
 
   return (
-    <>
+    <div style={{ backgroundColor: "var(--bg)", transition: "background-color 0.2s ease" }}>
       <Header />
       <main style={{ transition: "color 0.2s ease" }}>
         <Hero />
@@ -105,6 +122,6 @@ export default function Home() {
         <CTA />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

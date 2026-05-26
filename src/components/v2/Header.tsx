@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import Logo from "./Logo";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*";
 
@@ -102,19 +103,17 @@ export default function Header() {
 
         {/* Right: GitHub Action Callout */}
         <a
-          href="https://github.com/Tvarox/EMEI-Contracts"
-          target="_blank"
-          rel="noreferrer"
-          className="btn btn-ghost h-9 px-4 rounded-full text-xs font-semibold hover:bg-white/70"
-          style={{
-            paddingTop: 0,
-            paddingBottom: 0,
-            display: "inline-flex",
-            alignItems: "center",
+          href="#cta"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById("cta")?.scrollIntoView({ behavior: "smooth" });
           }}
+          className="flex items-center"
         >
-          GitHub
-          <span aria-hidden className="ml-1 text-[10px]">↗</span>
+          <InteractiveHoverButton 
+            text="Join waitlist" 
+            className="h-9 px-6 text-xs bg-transparent border-white/20 hover:border-transparent transition-all duration-300"
+          />
         </a>
       </nav>
     </div>

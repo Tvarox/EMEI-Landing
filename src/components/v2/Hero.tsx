@@ -98,7 +98,7 @@ export default function Hero() {
               style={{ marginTop: 0, marginBottom: 28 }}
             >
               EMEI is an open protocol where software issues, presents, and
-              collects invoices on-chain &mdash; with programmable mandates,
+              collects invoices on-chain with programmable mandates,
               reputation gating, and stablecoin settlement on Mantle.
               Built for the agents that already exist.
             </motion.p>
