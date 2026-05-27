@@ -94,20 +94,6 @@ export default function CTA() {
               </button>
             </div>
           </form>
-          
-          {/* Subtle error message */}
-          <AnimatePresence>
-            {status === "error" && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="mt-3 text-red-500/80 text-sm font-light tracking-wide"
-              >
-                {errorMessage}
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </div>
 
