@@ -77,19 +77,19 @@ export default function CTA() {
                   if (status === "error") setStatus("idle");
                 }}
                 disabled={status === "loading" || status === "success"}
-                className="flex-1 bg-transparent px-6 py-3 text-[var(--ink)] placeholder:text-[var(--muted)]/50 outline-none text-lg"
+                className="flex-1 bg-transparent px-5 py-2.5 md:px-6 md:py-3 text-[var(--ink)] placeholder:text-[var(--muted)]/50 outline-none text-base md:text-lg"
               />
               <button
                 type="submit"
                 disabled={status === "loading" || status === "success"}
-                className="flex items-center justify-center bg-[var(--ink)] text-[var(--bg)] p-3 rounded-full hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-70 disabled:hover:scale-100"
+                className="flex items-center justify-center bg-[var(--ink)] text-[var(--bg)] p-2.5 md:p-3 rounded-full hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-70 disabled:hover:scale-100"
               >
                 {status === "loading" ? (
-                  <Loader2 className="w-6 h-6 animate-spin" />
+                  <Loader2 className="w-5 h-5 md:w-6 md:h-6 animate-spin" />
                 ) : status === "success" ? (
-                  <Check className="w-6 h-6" />
+                  <Check className="w-5 h-5 md:w-6 md:h-6" />
                 ) : (
-                  <ArrowRight className="w-6 h-6" />
+                  <ArrowRight className="w-5 h-5 md:w-6 md:h-6" />
                 )}
               </button>
             </div>

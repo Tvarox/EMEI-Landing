@@ -121,15 +121,6 @@ export default function Hero() {
                 Read the protocol
                 <span aria-hidden>→</span>
               </a>
-              <a
-                href="https://github.com/Tvarox/EMEI-Contracts"
-                target="_blank"
-                rel="noreferrer"
-                className="btn btn-ghost"
-              >
-                View on GitHub
-                <span aria-hidden>↗</span>
-              </a>
             </motion.div>
           </div>
 
