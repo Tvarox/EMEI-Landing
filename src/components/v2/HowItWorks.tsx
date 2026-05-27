@@ -7,7 +7,7 @@ const STEPS = [
   {
     n: "01",
     title: "Issue",
-    body: "Agent A creates an invoice — payer address, amount, terms, optional category. It's an on-chain object the moment it exists.",
+    body: "Agent A creates an invoice: payer address, amount, terms, optional category. It's an on-chain object the moment it exists.",
     side: "from",
   },
   {

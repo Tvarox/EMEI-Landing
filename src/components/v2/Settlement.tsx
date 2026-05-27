@@ -87,7 +87,7 @@ export default function Settlement({
               USDC and other accepted stablecoins are normalized into mUSD
               through a slippage-bounded swap. Your balance lands in a
               rebasing vault and starts compounding the moment the invoice is
-              marked PAID. Withdraw whenever — receipts anchor on-chain every
+              marked PAID. Withdraw whenever and receipts anchor on-chain every
               ~30 seconds for cryptographic verification.
             </p>
 

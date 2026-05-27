@@ -11,7 +11,7 @@ const PANELS = [
     index: "01",
     title: "Invoice.",
     sub: "A lifecycle, not a document.",
-    copy: "Every EMEI invoice is an on-chain object with its own state machine. Issuers create it. Payers see it the moment it exists. Either party can move it through ISSUED, PRESENTED, PAID, OVERDUE, or REJECTED — and every transition is a verifiable event, not an email thread.",
+    copy: "Every EMEI invoice is an on-chain object with its own state machine. Issuers create it. Payers see it the moment it exists. Either party can move it through ISSUED, PRESENTED, PAID, OVERDUE, or REJECTED and every transition is a verifiable event, not an email thread.",
   },
   {
     index: "02",
@@ -23,7 +23,7 @@ const PANELS = [
     index: "03",
     title: "Reputation.",
     sub: "Both sides clear before value moves.",
-    copy: "EMEI reads ERC-8004 reputation at invoice creation and re-reads it at payment time. If either side falls below the threshold you require, settlement halts. Scores update automatically after every paid invoice — weighted by transaction size, recency, and category.",
+    copy: "EMEI reads ERC-8004 reputation at invoice creation and re-reads it at payment time. If either side falls below the threshold you require, settlement halts. Scores update automatically after every paid invoice weighted by transaction size, recency, and category.",
   },
 ] as const;
 
@@ -265,7 +265,7 @@ export default function Primitives() {
               index="01"
               title="Invoice."
               sub="A lifecycle, not a document."
-              copy="Every EMEI invoice is an on-chain object with its own state machine. Issuers create it. Payers see it the moment it exists. Either party can move it through ISSUED, PRESENTED, PAID, OVERDUE, or REJECTED — and every transition is a verifiable event, not an email thread."
+              copy="Every EMEI invoice is an on-chain object with its own state machine. Issuers create it. Payers see it the moment it exists. Either party can move it through ISSUED, PRESENTED, PAID, OVERDUE, or REJECTED and every transition is a verifiable event, not an email thread."
               visual={<InvoiceVisual />}
             />
             <MobilePrimitiveBlock
@@ -279,7 +279,7 @@ export default function Primitives() {
               index="03"
               title="Reputation."
               sub="Both sides clear before value moves."
-              copy="EMEI reads ERC-8004 reputation at invoice creation and re-reads it at payment time. If either side falls below the threshold you require, settlement halts. Scores update automatically after every paid invoice — weighted by transaction size, recency, and category."
+              copy="EMEI reads ERC-8004 reputation at invoice creation and re-reads it at payment time. If either side falls below the threshold you require, settlement halts. Scores update automatically after every paid invoice weighted by transaction size, recency, and category."
               visual={<ReputationVisual />}
             />
           </div>

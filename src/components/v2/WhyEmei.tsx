@@ -67,7 +67,7 @@ export default function WhyEmei() {
               </p>
               <p className="body-muted" style={{ maxWidth: "44ch" }}>
                 EMEI is a small set of on-chain primitives that let one piece
-                of software ask another for money &mdash; and let the answer
+                of software ask another for money and let the answer
                 be a yes that doesn&rsquo;t need a human in the loop.
               </p>
             </motion.div>
