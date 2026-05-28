@@ -75,7 +75,7 @@ export default function Header() {
           aria-label="EMEI"
           className="flex items-center gap-3 text-ink select-none font-bold w-[120px] shrink-0 whitespace-nowrap"
         >
-          <Logo width={20} aria-hidden />
+          <Logo width={26} aria-hidden />
           <ScrambleText
             text="EMEI"
             className="font-display font-semibold text-lg tracking-[0.16em] text-ink"

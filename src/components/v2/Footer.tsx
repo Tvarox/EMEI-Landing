@@ -29,7 +29,7 @@ export default function Footer() {
                 marginBottom: 16,
               }}
             >
-              <Logo width={20} className="text-ink" aria-hidden />
+              <Logo width={24} className="text-ink" aria-hidden />
               <span
                 style={{
                   fontFamily: "var(--font-display)",

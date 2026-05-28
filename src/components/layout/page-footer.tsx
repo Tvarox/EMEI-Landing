@@ -44,11 +44,11 @@ export const PageFooter = () => (
       >
         <Link href="/" className="flex items-center gap-3 w-fit">
           <Image
-            src="/Logo.svg"
+            src="/EmeiLogo2.svg"
             alt=""
-            width={28}
-            height={28}
-            className="w-7 h-7 invert opacity-90"
+            width={32}
+            height={32}
+            className="w-8 h-8 invert opacity-90"
           />
           <span className="font-semibold tracking-[0.22em] text-[15px] text-on-inverse">
             EMEI
