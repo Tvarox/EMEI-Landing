@@ -1,28 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter_Tight, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const interTight = Inter_Tight({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-inter-tight",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-});
-
-const notoSansSC = localFont({
-  src: "../../public/fonts/Noto_Sans_SC/NotoSansSC-VariableFont_wght.ttf",
-  variable: "--font-noto-sans-sc",
+  weight: ["400", "500", "600"],
   display: "swap",
-});
-
-const notoSansMono = localFont({
-  src: "../../public/fonts/Noto_Sans_Mono/NotoSansMono-VariableFont_wdth,wght.ttf",
-  variable: "--font-noto-sans-mono",
-  display: "swap",
+  variable: "--font-jetbrains-mono",
 });
 
 const vt323 = localFont({
@@ -34,57 +26,26 @@ const vt323 = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://emei.xyz"),
   title: {
-    default: "EMEI — A payment rail for autonomous agents",
+    default: "EMEI — Invoicing for machines",
     template: "%s · EMEI",
   },
   description:
-    "EMEI threads four open standards — x402, AP2 mandates, ERC-8004 identity, and mUSD settlement — into a single facilitator agents can actually pay through. Open-source, pre-production.",
-  keywords: [
-    "EMEI",
-    "x402",
-    "AP2",
-    "AP2 mandate",
-    "ERC-8004",
-    "agent identity",
-    "agent payments",
-    "Mantle",
-    "mUSD",
-    "facilitator",
-  ],
-  openGraph: {
-    title: "EMEI — A payment rail for autonomous agents",
-    description:
-      "x402 · AP2 mandate · ERC-8004 · mUSD on Mantle. One facilitator. Open-source, pre-production.",
-    url: "https://emei.xyz",
-    siteName: "EMEI",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "EMEI — A payment rail for autonomous agents",
-    description:
-      "x402 · AP2 mandate · ERC-8004 · mUSD on Mantle. One facilitator. Open-source, pre-production.",
-  },
+    "An open protocol where software issues, presents, and collects invoices on-chain. Mandates, reputation, and stablecoin settlement on Mantle.",
   icons: {
-    icon: "/Logo.svg",
-    shortcut: "/Logo.svg",
-    apple: "/Logo.svg",
+    icon: "/favicon.svg",
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${notoSansSC.variable} ${notoSansMono.variable} ${vt323.variable} h-full antialiased`}
+      className={`${interTight.variable} ${jetbrainsMono.variable} ${vt323.variable}`}
+      style={{ position: "relative" }}
     >
-      <body className="min-h-full flex flex-col bg-canvas text-ink">
-        {children}
-      </body>
+      <body className="antialiased" style={{ position: "relative" }}>{children}</body>
     </html>
   );
 }
