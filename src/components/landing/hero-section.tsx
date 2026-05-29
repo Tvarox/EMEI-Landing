@@ -10,12 +10,10 @@ const EASE = [0.25, 1, 0.5, 1] as const;
 export const HeroSection = () => {
   return (
     <section className="relative w-full overflow-hidden pt-32 sm:pt-36 md:pt-40 pb-24 sm:pb-32 min-h-[88vh] flex flex-col">
-      {/* Subtle ASCII flame texture in lower portion */}
       <div className="absolute inset-x-0 top-1/3 bottom-0 pointer-events-none opacity-[0.13]">
         <AsciiWave className="w-full h-full" color="#e05e46" />
       </div>
 
-      {/* Soft cream wash for depth */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -25,7 +23,6 @@ export const HeroSection = () => {
       />
 
       <div className="relative z-10 max-w-[1100px] mx-auto px-5 sm:px-6 flex-1 flex flex-col">
-        {/* Eyebrow — honest dev status */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,7 +89,6 @@ export const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* Honest disclaimer ribbon — replaces the old fake metrics */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

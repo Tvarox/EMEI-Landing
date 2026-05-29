@@ -61,7 +61,7 @@ export default function Footer() {
             <FooterLink href="#primitives">Primitives</FooterLink>
             <FooterLink href="#how-it-works">How it works</FooterLink>
             <FooterLink href="#settlement">Settlement</FooterLink>
-            <FooterLink href="#status">Status</FooterLink>
+            <FooterLink href="#dashboard">Dashboard</FooterLink>
           </FooterColumn>
         </div>
 

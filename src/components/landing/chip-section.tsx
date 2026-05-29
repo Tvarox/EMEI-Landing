@@ -9,10 +9,6 @@ import {
   useReducedMotion,
 } from "framer-motion";
 
-/* ---------------------------------------------------------------
-   Protocol data — kept short, deliberately no claims about
-   uptime, partners, or scale.
---------------------------------------------------------------- */
 type Corner = "tl" | "tr" | "br" | "bl";
 
 interface Protocol {
@@ -68,12 +64,9 @@ const PROTOCOLS: Protocol[] = [
   },
 ];
 
-/* ---------------------------------------------------------------
-   Coordinate system — single 1200x800 viewBox for threads
---------------------------------------------------------------- */
 const VB_W = 1200;
 const VB_H = 800;
-const CENTER = { x: VB_W / 2, y: VB_H / 2 }; // 600, 400
+const CENTER = { x: VB_W / 2, y: VB_H / 2 };
 
 const CORNER_POS: Record<Corner, { x: number; y: number }> = {
   tl: { x: 200, y: 180 },
@@ -82,10 +75,8 @@ const CORNER_POS: Record<Corner, { x: number; y: number }> = {
   bl: { x: 200, y: 620 },
 };
 
-// Cubic-bezier curves from the chip edge out to each corner anchor
 function threadPath(corner: Corner): string {
   const { x, y } = CORNER_POS[corner];
-  // Choose a midpoint that bows toward the center axis
   const cx1 = (CENTER.x + x) / 2;
   const cy1 = CENTER.y;
   const cx2 = x;
@@ -93,9 +84,6 @@ function threadPath(corner: Corner): string {
   return `M ${CENTER.x} ${CENTER.y} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${x} ${y}`;
 }
 
-/* ---------------------------------------------------------------
-   Card placement (Tailwind classes per corner)
---------------------------------------------------------------- */
 const CARD_POS: Record<Corner, string> = {
   tl: "left-4 top-24 sm:left-8 sm:top-28 md:left-12 md:top-24",
   tr: "right-4 top-24 sm:right-8 sm:top-28 md:right-12 md:top-24",
@@ -103,15 +91,11 @@ const CARD_POS: Record<Corner, string> = {
   bl: "left-4 bottom-12 sm:left-8 sm:bottom-16 md:left-12 md:bottom-20",
 };
 
-/* ---------------------------------------------------------------
-   The Chip — a stylized SVG ASIC
---------------------------------------------------------------- */
 function ChipCore({ pulse }: { pulse: MotionValue<number> }) {
   return (
     <motion.div
       className="relative"
       style={{
-        // Subtle scale-pulse driven by scroll
         scale: useTransform(pulse, [0, 1], [0.96, 1.04]),
       }}
     >
@@ -132,7 +116,6 @@ function ChipCore({ pulse }: { pulse: MotionValue<number> }) {
         viewBox="0 0 200 200"
         className="relative drop-shadow-[0_0_24px_rgba(224,94,70,0.18)]"
       >
-        {/* Outer frame */}
         <rect
           x="20"
           y="20"
@@ -143,7 +126,6 @@ function ChipCore({ pulse }: { pulse: MotionValue<number> }) {
           stroke="rgba(224,94,70,0.55)"
           strokeWidth="0.8"
         />
-        {/* Inner core */}
         <rect
           x="58"
           y="58"
@@ -155,7 +137,6 @@ function ChipCore({ pulse }: { pulse: MotionValue<number> }) {
           strokeWidth="0.6"
         />
 
-        {/* Inner trace grid */}
         <g stroke="rgba(244,243,239,0.10)" strokeWidth="0.4">
           {Array.from({ length: 5 }).map((_, i) => (
             <line
@@ -177,24 +158,18 @@ function ChipCore({ pulse }: { pulse: MotionValue<number> }) {
           ))}
         </g>
 
-        {/* Edge pads — 4 per side */}
         {Array.from({ length: 4 }).map((_, i) => {
           const offset = 38 + i * 32;
           return (
             <g key={`pads-${i}`} fill="rgba(224,94,70,0.7)">
-              {/* top */}
               <rect x={offset} y="14" width="6" height="6" rx="1" />
-              {/* bottom */}
               <rect x={offset} y="180" width="6" height="6" rx="1" />
-              {/* left */}
               <rect y={offset} x="14" width="6" height="6" rx="1" />
-              {/* right */}
               <rect y={offset} x="180" width="6" height="6" rx="1" />
             </g>
           );
         })}
 
-        {/* Corner registration marks */}
         {[
           [22, 22],
           [172, 22],
@@ -212,7 +187,6 @@ function ChipCore({ pulse }: { pulse: MotionValue<number> }) {
           </g>
         ))}
 
-        {/* Center wordmark */}
         <text
           x="100"
           y="103"
@@ -238,7 +212,6 @@ function ChipCore({ pulse }: { pulse: MotionValue<number> }) {
         </text>
       </svg>
 
-      {/* live blinker */}
       <motion.span
         aria-hidden
         className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-accent"
@@ -249,12 +222,9 @@ function ChipCore({ pulse }: { pulse: MotionValue<number> }) {
   );
 }
 
-/* ---------------------------------------------------------------
-   A single thread (path) + travelling pulse, scroll-driven
---------------------------------------------------------------- */
 function Thread({
   corner,
-  progress, // 0..1 within this thread's slot
+  progress,
   active,
 }: {
   corner: Corner;
@@ -262,21 +232,16 @@ function Thread({
   active: MotionValue<number>;
 }) {
   const d = threadPath(corner);
-
-  // pathLength (0..1) follows progress
   const pathLength = useTransform(progress, [0, 1], [0, 1]);
 
-  // Travelling pulse: position along path animates while active
   return (
     <g>
-      {/* dim base trace */}
       <path
         d={d}
         stroke="rgba(0,0,0,0.08)"
         strokeWidth="1"
         fill="none"
       />
-      {/* lit trace */}
       <motion.path
         d={d}
         stroke="url(#thread-grad)"
@@ -285,7 +250,6 @@ function Thread({
         strokeLinecap="round"
         style={{ pathLength, opacity: active }}
       />
-      {/* terminal node at the corner */}
       <motion.circle
         cx={CORNER_POS[corner].x}
         cy={CORNER_POS[corner].y}
@@ -306,12 +270,9 @@ function Thread({
   );
 }
 
-/* ---------------------------------------------------------------
-   Card — slides + fades in when its thread is active
---------------------------------------------------------------- */
 function ProtocolCard({
   protocol,
-  reveal, // 0..1
+  reveal,
 }: {
   protocol: Protocol;
   reveal: MotionValue<number>;
@@ -352,9 +313,6 @@ function ProtocolCard({
   );
 }
 
-/* ---------------------------------------------------------------
-   Mobile / reduced-motion fallback — vertical timeline
---------------------------------------------------------------- */
 function StaticFallback() {
   return (
     <div className="relative bg-canvas text-ink py-24 sm:py-32 px-5">
@@ -398,9 +356,6 @@ function StaticFallback() {
   );
 }
 
-/* ---------------------------------------------------------------
-   Main scroll-driven section
---------------------------------------------------------------- */
 export const ChipSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
@@ -410,12 +365,7 @@ export const ChipSection = () => {
     offset: ["start start", "end end"],
   });
 
-  // Chip pulse — gentle, the entire section through
   const chipPulse = useTransform(scrollYProgress, [0, 0.1, 0.95, 1], [0, 1, 1, 0.7]);
-
-  // Each protocol gets a slice of progress: 0.10–0.30, 0.30–0.50, 0.50–0.70, 0.70–0.90
-  // We compute a sub-progress 0..1 for each thread (path draw)
-  // and a sub-reveal 0..1 for each card (slightly delayed)
   const t1Path = useTransform(scrollYProgress, [0.10, 0.28], [0, 1]);
   const t2Path = useTransform(scrollYProgress, [0.30, 0.48], [0, 1]);
   const t3Path = useTransform(scrollYProgress, [0.50, 0.68], [0, 1]);
@@ -431,11 +381,9 @@ export const ChipSection = () => {
   const t3Card = useTransform(scrollYProgress, [0.58, 0.70], [0, 1]);
   const t4Card = useTransform(scrollYProgress, [0.78, 0.90], [0, 1]);
 
-  // Headline crossfade — "One core" intro fades out, "All four threaded" fades in
   const introOpacity = useTransform(scrollYProgress, [0.02, 0.10, 0.85, 0.92], [0, 1, 1, 0]);
   const outroOpacity = useTransform(scrollYProgress, [0.88, 0.95], [0, 1]);
 
-  // Step counter (1..4) for the bottom HUD
   const stepIdx = useTransform(scrollYProgress, (v): number => {
     if (v < 0.10) return 0;
     if (v < 0.30) return 1;
@@ -444,8 +392,6 @@ export const ChipSection = () => {
     return 4;
   });
 
-  // Hoisted: HUD step-counter fade-in + bottom scroll-cue fade-out
-  // (must be declared before the conditional return for hooks-rules)
   const stepCounterOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
   const scrollCueOpacity = useTransform(
     scrollYProgress,
@@ -453,7 +399,6 @@ export const ChipSection = () => {
     [1, 1, 1, 0],
   );
 
-  // Reduced motion — render static, accessible version
   if (reduced) {
     return (
       <section id="protocol" className="bg-canvas">
@@ -471,12 +416,9 @@ export const ChipSection = () => {
 
   return (
     <>
-      {/* Mobile fallback — readable vertical timeline */}
       <section id="protocol" className="lg:hidden bg-canvas">
         <StaticFallback />
       </section>
-
-      {/* Desktop scroll-driven cinematic */}
       <section
         ref={sectionRef}
         id="protocol-desktop"
@@ -485,8 +427,6 @@ export const ChipSection = () => {
         aria-label="EMEI protocol architecture"
       >
         <div className="sticky top-0 h-screen w-full overflow-hidden">
-          {/* --- Ambient backdrop --- */}
-          {/* faint grid */}
           <div
             aria-hidden
             className="absolute inset-0 opacity-[0.22]"
@@ -500,7 +440,6 @@ export const ChipSection = () => {
                 "radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%)",
             }}
           />
-          {/* center spotlight */}
           <div
             aria-hidden
             className="absolute inset-0 pointer-events-none"
@@ -510,7 +449,6 @@ export const ChipSection = () => {
             }}
           />
 
-          {/* --- Top HUD --- */}
           <div className="absolute top-24 left-0 right-0 px-6 z-30">
             <div className="max-w-[1100px] mx-auto flex items-center justify-between">
               <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-muted">
@@ -525,7 +463,6 @@ export const ChipSection = () => {
             </div>
           </div>
 
-          {/* --- Intro / outro headline overlays --- */}
           <motion.div
             style={{ opacity: introOpacity }}
             className="absolute inset-x-0 top-1/2 -translate-y-[210px] z-30 px-6 pointer-events-none"
@@ -555,7 +492,6 @@ export const ChipSection = () => {
             </div>
           </motion.div>
 
-          {/* --- SVG threads (sized to viewport) --- */}
           <svg
             className="absolute inset-0 w-full h-full z-10"
             viewBox={`0 0 ${VB_W} ${VB_H}`}
@@ -578,17 +514,13 @@ export const ChipSection = () => {
             ))}
           </svg>
 
-          {/* --- Center chip --- */}
           <div className="absolute inset-0 grid place-items-center z-20 pointer-events-none">
             <ChipCore pulse={chipPulse} />
           </div>
 
-          {/* --- Cards --- */}
           {threads.map(([p, , , reveal]) => (
             <ProtocolCard key={p.id} protocol={p} reveal={reveal} />
           ))}
-
-          {/* --- Bottom HUD: scroll cue --- */}
           <motion.div
             className="absolute bottom-8 left-0 right-0 z-30 flex flex-col items-center gap-2"
             style={{ opacity: scrollCueOpacity }}
@@ -609,8 +541,6 @@ export const ChipSection = () => {
   );
 };
 
-/* Tiny helper to render a motion-value-driven step counter.
-   Avoids re-rendering parent by reading the value via an effect. */
 function StepCounter({ step }: { step: MotionValue<number> }) {
   const [v, setV] = React.useState(0);
   React.useEffect(() => step.on("change", (latest) => setV(latest)), [step]);
