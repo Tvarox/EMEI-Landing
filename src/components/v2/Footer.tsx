@@ -50,19 +50,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <FooterColumn
-            title="Protocol"
-            containerStyle={{
-              display: "grid",
-              gridTemplateColumns: "max-content max-content",
-              gap: "10px 48px",
-            }}
-          >
-            <FooterLink href="#primitives">Primitives</FooterLink>
-            <FooterLink href="#how-it-works">How it works</FooterLink>
-            <FooterLink href="#settlement">Settlement</FooterLink>
-            <FooterLink href="#dashboard">Dashboard</FooterLink>
-          </FooterColumn>
+
         </div>
 
         <div
@@ -112,65 +100,3 @@ export default function Footer() {
   );
 }
 
-function FooterColumn({
-  title,
-  children,
-  containerStyle,
-}: {
-  title: string;
-  children: React.ReactNode;
-  containerStyle?: React.CSSProperties;
-}) {
-  return (
-    <div>
-      <div
-        className="eyebrow"
-        style={{ marginBottom: 14, fontSize: 11 }}
-      >
-        {title}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 10,
-          ...containerStyle,
-        }}
-      >
-        {children}
-      </div>
-    </div>
-  );
-}
-
-function FooterLink({
-  href,
-  children,
-  external,
-}: {
-  href: string;
-  children: React.ReactNode;
-  external?: boolean;
-}) {
-  return (
-    <a
-      href={href}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noreferrer" : undefined}
-      style={{
-        fontSize: 14,
-        color: "var(--ink)",
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 6,
-      }}
-    >
-      {children}
-      {external && (
-        <span aria-hidden style={{ color: "var(--muted-2)" }}>
-          ↗
-        </span>
-      )}
-    </a>
-  );
-}

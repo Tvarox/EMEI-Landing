@@ -114,7 +114,9 @@ export default function Hero() {
               style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
             >
               <a
-                href="#primitives"
+                href="https://analytics.emei.space"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn btn-primary"
                 aria-label="Read the protocol"
               >
